@@ -23,12 +23,15 @@ Observed on 2026-06-22:
   complete local safetensors snapshot and is usable by the current causal-LM
   ours runner. It is used only for caveat-ready full-data runs, not as the
   paper-strict T5 comparison backbone.
-- `/root/autodl-tmp/model_cache/hf_snapshots/t5-large` contains partial
-  Hugging Face metadata/config/tokenizer files. Weight download was resumed via
-  proxy and is still in progress/subject to HF availability.
-- `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt` is the
-  target path for the CITB base checkpoint. Download was started via proxy and
-  is still in progress/subject to HF availability.
+- `/root/autodl-tmp/model_cache/hf_snapshots/t5-large` contains a completed
+  T5-large snapshot including `pytorch_model.bin` (`2,950,825,948` bytes),
+  `model.safetensors`, config, tokenizer files, and `spiece.model`. The
+  standard Hugging Face snapshot API failed through the mirror, so the binary
+  was completed with `curl -C -` from
+  `https://hf-mirror.com/t5-large/resolve/main/pytorch_model.bin`.
+- `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt`
+  contains a completed base snapshot including `pytorch_model.bin`, config,
+  tokenizer files, and `spiece.model`.
 - `/root/autodl-tmp/model_cache/ThomasNLG/CT0-11B` exists and contains small
   Hugging Face config/tokenizer files only. Size observed: about 1.4M.
 - `/root/autodl-tmp/model_cache/lfpt5/t5.1.1.lm100k` exists and contains
@@ -38,9 +41,10 @@ Observed on 2026-06-22:
 - `/root/autodl-tmp/model_cache/lfpt5/t5.1.1.lm100k-pytorch` exists but is empty.
 
 A local Llama causal-LM snapshot is ready for the current implementation.
-T5-family assets are not fully ready yet. LFPT5 also needs `gsutil` or an
-equivalent Google Cloud Storage downloader for the official `gs://t5-data/...`
-checkpoint objects.
+`google/t5-small-lm-adapt` and `t5-large` are now present locally. LFPT5 still
+needs `gsutil` or an equivalent Google Cloud Storage downloader for the official
+`gs://t5-data/...` checkpoint objects if we choose the LFPT5-specific
+LM-adapted T5-large route.
 
 ## v2 CCF-A Required Assets
 
@@ -57,7 +61,7 @@ Current state:
 - Official CITB source/data are vendored.
 - Official CITB source/data are also downloaded outside Git at
   `/root/autodl-tmp/lora-baselines-run_v1/external_sources/citb`.
-- A `google/t5-small-lm-adapt` snapshot download has been started under
+- A `google/t5-small-lm-adapt` snapshot is complete under
   `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt`.
 - CITB does not provide a ready-made 100-SuperNI-init checkpoint in the README;
   it provides the Stage-1 training command using `google/t5-small-lm-adapt`.
@@ -81,8 +85,9 @@ Current state:
 - The local `seqglue` stream is not the official standard PEFT CL suite.
 - Official O-LoRA streams are generated under
   `/root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite/standard_peft`.
-- T5-large checkpoint download is partial/in progress at
-  `/root/autodl-tmp/model_cache/hf_snapshots/t5-large`.
+- T5-large is complete and locally readable at
+  `/root/autodl-tmp/model_cache/hf_snapshots/t5-large`; validation with
+  Transformers `AutoConfig` and `AutoTokenizer` succeeded.
 - Ours runner compatibility still blocks launch because the current path is
   causal-LM PEFT, not T5 seq2seq PEFT.
 

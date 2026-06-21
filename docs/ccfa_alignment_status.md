@@ -1,6 +1,6 @@
 # CCF-A Three-Suite Alignment Status
 
-Updated: 2026-06-22 05:35 UTC+8
+Updated: 2026-06-22 07:10 UTC+8
 
 This file records the current machine-local preparation state for the v2
 CCF-A three-suite experiments. Large repositories, data, model snapshots, logs,
@@ -59,15 +59,19 @@ being represented as official.
   `/root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite`.
 - Runtime configs:
   `/root/autodl-tmp/lora-baselines-run_v1/configs/ccfa_three_suite`.
-- Queue script:
-  `/root/autodl-tmp/lora-baselines-run_v1/run_ccfa_citb_caveat_queue.sh`.
-- Queue log:
-  `/root/autodl-tmp/lora-baselines-run_v1/logs/ccfa_citb_caveat_queue.log`.
+- Queue scripts:
+  `/root/autodl-tmp/lora-baselines-run_v1/run_ccfa_citb_caveat_queue.sh`
+  and `/root/autodl-tmp/lora-baselines-run_v1/run_ccfa_citb_caveat_attempt2_queue.sh`.
+- Queue logs:
+  `/root/autodl-tmp/lora-baselines-run_v1/logs/ccfa_citb_caveat_queue.log`
+  and `/root/autodl-tmp/lora-baselines-run_v1/logs/ccfa_citb_caveat_attempt2_queue.log`.
 
 ## Suite A: CITB
 
-Status: `caveat_ready` for three InstrDialog ours-only runs; strict paper
-alignment remains `blocked`.
+Status: `caveat_ready` resources are prepared for three InstrDialog ours-only
+runs; strict paper alignment remains `blocked`. Two Llama caveat queue attempts
+were started and both received `Terminated` before completing the first run, so
+they are recorded as interrupted rather than completed results.
 
 Prepared:
 
@@ -87,6 +91,9 @@ Prepared:
   and initial multitask score are matrix-derived.
 - Current machine has a runnable local causal-LM backbone at
   `/root/autodl-tmp/model_cache/meta-llama/Llama-3.1-8B-Instruct`.
+- `google/t5-small-lm-adapt` was downloaded through the proxy to
+  `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt`; it
+  includes `pytorch_model.bin`, config, tokenizer files, and `spiece.model`.
 
 Started:
 
@@ -95,15 +102,20 @@ Started:
 - W&B project: `lora- baselines-run_v1`.
 - First run startup was verified: W&B initialized, the stream loaded with
   19 segments, and model weights began loading successfully.
+- Attempt 1 was interrupted with `Terminated` before producing a completed run.
+- Attempt 2 used run names suffixed with `_attempt2`; it also started W&B and
+  loaded the official full stream but was interrupted with `Terminated` while
+  training the first segment. Local partial artifacts remain under
+  `/root/autodl-tmp/lora-baselines-run_v1/results/ccfa_three_suite/runs/`.
 
 Strict blockers:
 
 - The current ours runner builds `AutoModelForCausalLM` and PEFT
   `TaskType.CAUSAL_LM`; it does not yet implement a T5 seq2seq PEFT path.
 - CITB README/scripts specify `google/t5-small-lm-adapt` for Stage 1, but do
-  not provide a ready-made 100-SuperNI-init checkpoint. A local HF download for
-  `google/t5-small-lm-adapt` is in progress under
-  `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt`.
+  not provide a ready-made 100-SuperNI-init checkpoint. The base checkpoint is
+  local; the paper-strict SuperNI-init checkpoint still requires running CITB
+  Stage 1 or finding a verifiable author-provided artifact.
 - Paper-strict CITB result reporting still needs export of the same score
   matrix fields expected by `collect_results.py`.
 
@@ -129,13 +141,16 @@ Prepared:
 - Progressive Prompts official README was inspected. Its T5 example uses
   `t5-large`, `select_k_per_class=1000`, prompt length 10, and task lists passed
   directly on the command line.
-- A Hugging Face snapshot download for `t5-large` is in progress/partial under
-  `/root/autodl-tmp/model_cache/hf_snapshots/t5-large`.
+- `t5-large` is local under
+  `/root/autodl-tmp/model_cache/hf_snapshots/t5-large`. The Hugging Face API
+  and initial direct download were unstable, so the 2.8G `pytorch_model.bin` was
+  completed via `hf-mirror.com` direct URL with repeated `curl -C -` resumes.
+  Transformers validation succeeded for `AutoConfig` and `AutoTokenizer`.
 
 Blockers:
 
 - Current ours does not have a T5-large seq2seq PEFT runner.
-- `t5-large` weights were not complete at the time this status file was written.
+- `t5-large` weights are complete and readable locally.
 - LFPT5 sample-equivalence with the O-LoRA four-task standard benchmark still
   needs final paper/code reconciliation; LFPT5 is lifelong few-shot prompt
   tuning and its README points to LM-adapted T5-large rather than O-LoRA's
