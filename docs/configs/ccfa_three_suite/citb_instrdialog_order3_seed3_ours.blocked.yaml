@@ -1,26 +1,29 @@
 # ready: false
-# blocker: official 500/50/100 stream, T5-small LM-adapted + 100 SuperNI init, and CITB metric exporter not yet aligned.
-experiment_name: ccfa_v2_citb_instrdialog_order3_seed3_ours
+# suite: CITB
+# benchmark: InstrDialog-order3
+# blocker: Official order/data stream generated, but ours still needs T5-small LM-adapted + 100-SuperNI-init seq2seq checkpoint loading and CITB ROUGE-L matrix export.
+experiment_name: ccfa_v2_instrdialog_order3_seed3_ours
 mode: ours
 seed: 3
 paths:
-  processed_stream_file: TODO_citb_instrdialog_official_order3_train500_dev50_test100.json
-  raw_citb_root: ../../benchmark/instrdialog/source
+  project_root: /root/Lora-Baselines
+  processed_stream_file: /root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite/citb/citb_instrdialog_order3_train500_dev50_test100.json
+  results_dir: /root/autodl-tmp/lora-baselines-run_v1/results
 data:
-  stream_name: instrdialog
-  official_order: 3
-  train_instances_per_task: 500
-  dev_instances_per_task: 50
-  test_instances_per_task: 100
+  suite: "CITB"
+  benchmark: "InstrDialog-order3"
+  stream_format: unified_ccfa_stream
   ready: false
 model:
-  backbone_name: google/t5-small-lm-adapt
-  hf_model_name_or_path: TODO_local_t5_small_lm_adapt_superni_init_checkpoint
+  backbone: "google/t5-small-lm-adapt + 100 SuperNI init"
+  hf_model_name_or_path: "TODO_local_t5_small_lm_adapt_superni_init_checkpoint"
 output:
-  run_name: ccfa_v2_citb_instrdialog_order3_seed3_ours
-  tracking: {use_wandb: true, wandb_project: lora-baselines-run_v1, wandb_group: ccfa_v2_citb_instrdialog}
+  run_name: ccfa_v2_instrdialog_order3_seed3_ours
+  tracking:
+    use_wandb: true
+    wandb_project: lora- baselines-run_v1
+    wandb_group: ccfa_v2_three_suite
 paper:
   ready: false
-  official_paper: https://aclanthology.org/2023.findings-emnlp.633/
-  official_repo: https://github.com/hyintell/CITB
-  metrics: [rougeL_AR, rougeL_FWT, rougeL_BWT, Tinit, Tunseen]
+  metrics: ["ROUGE-L AR", "FWT", "BWT", "Tinit", "Tunseen"]
+  notes: "Official order/data stream generated, but ours still needs T5-small LM-adapted + 100-SuperNI-init seq2seq checkpoint loading and CITB ROUGE-L matrix export."

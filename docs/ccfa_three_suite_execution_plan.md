@@ -196,5 +196,52 @@ Immediate actions:
 
 ## Current Status
 
-No training was launched for v2. Every run in the committed manifest is blocked
-until data/backbone/metric/config alignment is finished.
+Updated 2026-06-22:
+
+- Generated auditable streams under
+  `/root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite/` using
+  `docs/scripts/prepare_ccfa_three_suite_artifacts.py`.
+- Generated blocked configs under
+  `/root/autodl-tmp/lora-baselines-run_v1/configs/ccfa_three_suite/`.
+- Updated runtime manifest:
+  `/root/autodl-tmp/lora-baselines-run_v1/ccfa_three_suite_manifest.csv`.
+- Added metric aggregation wrapper:
+  `docs/scripts/compute_ccfa_three_suite_metrics.py`.
+
+No training was launched. All 12 ours-only rows remain `blocked`; there is no
+fully aligned run yet.
+
+Suite-specific status:
+
+- CITB InstrDialog: official order/task data were converted for 3 orders using
+  the requested 500 train / 50 dev / 100 test target. Still blocked because ours
+  currently lacks a T5-small LM-adapted + 100-SuperNI-init seq2seq runner path
+  and CITB-compatible ROUGE-L result-matrix export.
+- CITB InstrDialog++: official 38-task order/task data were converted using the
+  requested 100 / 50 / 100 target for auditability, but launch remains blocked
+  because vendored official long-stream scripts use
+  `max_num_instances_per_eval_task=25`; this must be reconciled with the target
+  split before any paper run.
+- Standard T5-Large PEFT CL: O-LoRA standard orders 1/2/3 were converted from
+  `CL_Benchmark` and `configs/order*_configs`. Still blocked because ours is
+  still a causal-LM PEFT path (`CAUSAL_LM` LoRA wrapper) rather than a T5-large
+  seq2seq PEFT runner, and LFPT5/Progressive-Prompts sample-equivalence still
+  needs final verification.
+- Dialogue NLG / ARPER: ARPER official source was fetched to
+  `/root/autodl-tmp/lora-baselines-run_v1/external/arper` and its WOZ3
+  unique-domain and unique-dialogue-act resources were converted. The 3 seed
+  configs target the dialogue-act stream. Still blocked because ours needs a
+  dialogue-NLG backbone decision, official SER scorer integration over generated
+  outputs, and confirmation that this ARPER WOZ3 resource is the intended
+  MultiWOZ-2.0 comparison target.
+
+Current model/checkpoint blockers:
+
+- `/root/autodl-tmp/model_cache/lfpt5/t5.1.1.lm100k` contains only small
+  metadata/index files; the large TensorFlow shards and converted PyTorch
+  checkpoint are missing.
+- No local `google/t5-small-lm-adapt` + 100-SuperNI-init checkpoint is configured
+  for ours.
+- The ours runner currently loads `AutoModelForCausalLM` and creates PEFT LoRA
+  with `TaskType.CAUSAL_LM`; this is not aligned with the T5-small/T5-large
+  seq2seq suites.
