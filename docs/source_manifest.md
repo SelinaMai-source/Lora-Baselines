@@ -137,7 +137,7 @@ The v2 branch prepares exactly three main experiment suites:
 
 - Downloaded: yes, as project-owner local source snapshot.
 - Source path: `methods/ours/source/project_local`.
-- v2 core code folder: `methods/ours/source/project_local`, documented by `methods/ours/README.md`, `methods/ours/source/project_local/README.md`, and `methods/ours/source/project_local/CORE_CODE_MANIFEST.md`.
+- v2 core code folder: `methods/ours/core_code`, which indexes the implementation in `methods/ours/source/project_local`; documented by `methods/ours/README.md`, `methods/ours/core_code/README.md`, `methods/ours/source/project_local/README.md`, and `methods/ours/source/project_local/CORE_CODE_MANIFEST.md`.
 - Official URL: project-owner local source `/root/autodl-tmp/Lora-code`, not an external published official repository.
 - Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`.
 - Local dirty status: dirty at vendoring time; 143 status entries were present, including modified `core/train.py`, `core/evaluate.py`, `core/metrics_utils.py`, `core/wandb_tracker.py`, modified/new `configs/paper/published_setting/*`, and local generated/state/cache paths that were excluded.
