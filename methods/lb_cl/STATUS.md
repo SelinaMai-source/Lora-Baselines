@@ -1,7 +1,9 @@
 # LB-CL
 
-Status: published paper verified; public official code not found.
+Status: project-local scaffold/configs added in `source/project_local/`; no public official experiment code was verified.
 
-Do not use non-official reproduction code as the strict experiment source unless the project owner explicitly approves it and labels it as a candidate.
+Paper: Learn more, but bother less: parameter efficient continual learning
 
-See `docs/source_manifest.md`.
+Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`
+
+Do not treat this as verified official paper code unless a project owner later confirms equivalence.

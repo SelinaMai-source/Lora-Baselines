@@ -1,7 +1,9 @@
 # Seq-GLUE
 
-Status: no standalone official Seq-GLUE repository was verified in this environment.
+Status: project-local Seq-GLUE stream/configs added in `source/project_local/`; no standalone official Seq-GLUE-only repository was verified.
 
-Use paper-specific official implementations only after confirming the exact GLUE task sequence and order. Candidate contexts include LFPT5 and Progressive Prompts, but they are not recorded here as a final strict source for Seq-GLUE.
+Official GLUE source: https://gluebenchmark.com/
 
-See `docs/source_manifest.md`.
+Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`
+
+Project-local stream: `seqglue_cl_tasks_train50_eval10.json` with sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa.

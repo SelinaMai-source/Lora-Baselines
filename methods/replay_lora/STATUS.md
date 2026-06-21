@@ -1,5 +1,11 @@
 # Replay LoRA
 
-Status: source not vendored. A separate official Replay LoRA repository was not verified; use only paper/official-code settings after confirming the exact replay implementation.
+Status: official O-LoRA baseline source referenced; project-local replay implementation/configs added in `source/project_local/`.
 
-See `docs/source_manifest.md` for paper/source links, experiment-setting notes, and download blockers.
+Official reference source: https://github.com/cmnfriend/O-LoRA
+
+Official reference commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`
+
+Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`
+
+No separate official Replay LoRA repository was verified.

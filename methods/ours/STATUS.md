@@ -1,7 +1,9 @@
 # Ours
 
-Status: source required from project owner.
+Status: project-owner local implementation/configs added in `source/project_local/`.
 
-No published paper, official experiment code, or owner-approved source has been verified for this repository. Do not treat any placeholder files in this directory as runnable experiment settings.
+Project-local source: `/root/autodl-tmp/Lora-code`
 
-See `docs/source_manifest.md`.
+Project-local commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`
+
+The source tree was dirty when inspected; this is not an external published official repository.

@@ -8,6 +8,7 @@ This repository is organized for selected LoRA continual learning methods and be
 - No git submodules are used, because `.gitmodules` would add a root-level ordinary file.
 - Vendored official sources live under each entry's `source/` directory with nested `.git` directories removed.
 - Large model weights, gated assets, and generated experiment outputs are not vendored.
+- Git LFS is used for complete benchmark files that exceed GitHub's 100MB per-file limit; this requires the hidden root `.gitattributes` file.
 
 ## Network And Proxy Verification
 
@@ -22,25 +23,27 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### Sequential LoRA
 
-- Downloaded: no separate source tree.
-- Source path: none; uses the O-LoRA official baseline source at `methods/o_lora/source`.
+- Downloaded: yes, as project-local baseline plus official O-LoRA reference.
+- Source path: `methods/sequential_lora/source/project_local`; official reference source at `methods/o_lora/source`.
 - Official URL: https://github.com/cmnfriend/O-LoRA
-- Commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8` for the referenced O-LoRA source.
-- Proxy used: yes.
+- Official reference commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`.
+- Proxy used: yes for official reference.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Notes: no separate official Sequential LoRA repository was verified; this is documented as the baseline in the O-LoRA paper/source.
+- Notes: no separate official Sequential LoRA repository was verified; project-local baseline implementation/configs are included for the complete v1 package.
 
 ### Replay LoRA
 
-- Downloaded: no separate source tree.
-- Source path: none; uses the O-LoRA official baseline source at `methods/o_lora/source`.
+- Downloaded: yes, as project-local replay baseline plus official O-LoRA reference.
+- Source path: `methods/replay_lora/source/project_local`; official reference source at `methods/o_lora/source`.
 - Official URL: https://github.com/cmnfriend/O-LoRA
-- Commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8` for the referenced O-LoRA source.
-- Proxy used: yes.
+- Official reference commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`.
+- Proxy used: yes for official reference.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Notes: no separate official Replay LoRA repository was verified; this is documented as the baseline in the O-LoRA paper/source.
+- Notes: no separate official Replay LoRA repository was verified; project-local replay implementation/configs are included for the complete v1 package.
 
 ### O-LoRA
 
@@ -55,14 +58,14 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### LB-CL
 
-- Downloaded: no.
-- Source path: none.
+- Downloaded: yes, as project-local scaffold/configs.
+- Source path: `methods/lb_cl/source/project_local`.
 - Official URL: not verified.
-- Commit: not available.
-- Proxy used: not applicable.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`.
+- Proxy used: not applicable for project-local source.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Not downloaded reason: no public official code source was verified.
+- Notes: no public official LB-CL experiment code was verified. The project-local README marks LB-CL as a scaffold, so it is included for completeness but must not be claimed as strict official paper code without owner verification.
 
 ### Progressive Prompts
 
@@ -98,31 +101,32 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### Ours
 
-- Downloaded: no.
-- Source path: none.
-- Official URL: source required from project owner.
-- Commit: not available.
+- Downloaded: yes, as project-owner local source snapshot.
+- Source path: `methods/ours/source/project_local`.
+- Official URL: project-owner local source `/root/autodl-tmp/Lora-code`.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`.
 - Proxy used: not applicable.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Not downloaded reason: no published paper, official experiment code, or project-owner-approved source was provided.
+- Notes: local source tree was dirty when inspected; logs, caches, archives, model assets, and result outputs are excluded. This is not an external published official repository.
 
 ## Benchmarks
 
 ### InstrDialog
 
-- Downloaded: partial official source.
+- Downloaded: yes, complete official CITB source/data.
 - Source path: `benchmark/instrdialog/source`.
 - Official URL: https://github.com/hyintell/CITB
 - Commit: `bf50533b5bced4c388691ecc75e26773da96b3fd`.
 - Proxy used: yes.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Notes: vendored from the official local clone at `/root/autodl-tmp/CITB`. The nested `.git` directory is not committed. Official `data/CIT_data`, `data/splits`, scripts, scores, and source code are included. Official `data/tasks` is not committed because it is about 3.1G; use the official CITB repository to restore it before running full experiments.
+- LFS used: no file in CITB exceeds GitHub's 100MB per-file limit; complete `data/tasks` is committed as regular Git files.
+- Notes: vendored from the official local clone at `/root/autodl-tmp/CITB`; nested `.git` removed.
 
 ### InstrDialog++
 
-- Downloaded: no separate duplicate source tree.
+- Downloaded: yes, via shared complete CITB source.
 - Source path: uses `benchmark/instrdialog/source`.
 - Official URL: https://github.com/hyintell/CITB
 - Commit: `bf50533b5bced4c388691ecc75e26773da96b3fd` for the shared CITB source.
@@ -143,14 +147,15 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### MultiWOZ NLG Dataset
 
-- Downloaded: partial official source.
+- Downloaded: yes, complete official MultiWOZ source/data with Git LFS for oversized JSON files.
 - Source path: `benchmark/multiwoz_nlg/source/multiwoz`.
 - Official URL: https://github.com/budzianowski/multiwoz
 - Commit: `fe0c8e65cfcd8462bd33c86e35f21addc84ca82b`.
 - Proxy used: yes.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Notes: vendored from the official local clone at `/root/autodl-tmp/Lora-code/data/raw/multiwoz/multiwoz_repo`. Official code, database files, and available small official zip distributions are included. Unzipped `data/MultiWOZ_2.1/data.json` and `data/MultiWOZ_2.2/data.json` are not committed because they exceed GitHub's 100MB per-file limit; restore them from the official repository or unzip official releases in the experiment environment before full runs.
+- LFS used: yes for `data/MultiWOZ_2.1/data.json` and `data/MultiWOZ_2.2/data.json`, which exceed GitHub's 100MB per-file limit.
+- Notes: vendored from the official local clone at `/root/autodl-tmp/Lora-code/data/raw/multiwoz/multiwoz_repo`; nested `.git` removed.
 
 ### MultiWOZ Evaluation
 
@@ -164,11 +169,11 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### Seq-GLUE
 
-- Downloaded: no.
-- Source path: none.
-- Official URL: no standalone official Seq-GLUE-only source was verified.
-- Commit: not available.
-- Proxy used: not applicable.
+- Downloaded: yes, as project-local benchmark stream/configs.
+- Source path: `benchmark/seq_glue/source/project_local`.
+- Official URL: no standalone official Seq-GLUE-only source was verified; GLUE official source is https://gluebenchmark.com/.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`.
+- Proxy used: not applicable for project-local source.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Not downloaded reason: no standalone official Seq-GLUE source was verified; use task sequences from method-specific official repositories only after matching the target paper.
+- Notes: includes project-local 8-task stream `sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa`, conversion scripts, and published-setting configs. Treat as project-local Seq-GLUE package, not a standalone official Seq-GLUE repository.
