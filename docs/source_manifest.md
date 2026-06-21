@@ -11,9 +11,9 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ## Download Attempt Summary
 
-Official GitHub sources were attempted from this environment on 2026-06-21. Both HTTPS and SSH clone attempts to GitHub official repositories timed out on `cmnfriend/O-LoRA`; GitHub API requests for commit resolution also timed out. Therefore, public official repositories are recorded but not vendored, except for local project-owner code found under `/root/autodl-tmp/Lora-code` for `Ours`.
+Official GitHub sources were attempted from this environment on 2026-06-21. HTTPS access to GitHub timed out on `cmnfriend/O-LoRA` before commit resolution or clone could complete. Therefore, public official repositories are recorded but not vendored and exact HEAD commits were not resolved locally.
 
-Use `docs/download_official_sources.sh` in a network-stable environment to fetch vendor copies and write commit records.
+Use `docs/download_official_sources.sh` in a network-stable environment to fetch vendor copies and write commit records. Large checkpoints, gated data, Google Drive material, and licensed datasets are intentionally not downloaded by that helper.
 
 ## Methods
 
@@ -52,9 +52,9 @@ Use `docs/download_official_sources.sh` in a network-stable environment to fetch
 
 ### LB-CL
 
-- Paper title: Learn More but Bother Less: Parameter Efficient Continual Learning.
-- Paper URL: currently unresolved from a stable official source in this environment; search results referenced NeurIPS 2024 material but did not provide a verifiable official code repository.
-- Official code URL: not verified.
+- Paper title: Learn more, but bother less: parameter efficient continual learning.
+- Paper URL: https://openreview.net/forum?id=ZxtaNh5UYB and https://proceedings.neurips.cc/paper_files/paper/2024/file/b0bc711f48724237b38823c4d9cee10b-Paper-Conference.pdf
+- Official code URL: not found in the paper, OpenReview page, or NeurIPS listing.
 - Commit / tag / release: not available.
 - Original experiment configuration location: not available.
 - Data / model / dependency requirements: not available without official source.
@@ -97,14 +97,14 @@ Use `docs/download_official_sources.sh` in a network-stable environment to fetch
 
 ### Ours
 
-- Paper title: project-owner method, not a published external paper in this repository.
+- Paper title: source required from project owner.
 - Paper URL: source required from project owner.
-- Official code URL: local source found at `/root/autodl-tmp/Lora-code`.
-- Commit / tag / release: local git commit `d711d912926c58c13acc02b3c3e4cfddd9f2c969`; local tree was dirty, so copied files should be reviewed before publication.
-- Original experiment configuration location: copied from local `configs/ours.yaml` and `configs/paper/published_setting/*__ours__s123*.yaml`.
-- Data / model / dependency requirements: local configuration references `assets/pretrained/meta-llama/Llama-3.1-8B-Instruct` and processed benchmark streams under `data/processed`.
-- Downloaded: yes, selected local source/config files only.
-- Not downloaded reason: no external official source or paper URL was provided. Full local repository was not copied because it contains large logs, caches, archives, and unrelated dirty working-tree changes.
+- Official code URL: source required from project owner.
+- Commit / tag / release: not available.
+- Original experiment configuration location: source required from project owner.
+- Data / model / dependency requirements: source required from project owner.
+- Downloaded: no.
+- Not downloaded reason: no published paper, official experiment code, or project-owner-approved source was provided in this repository. Placeholder files under `methods/ours/` must not be used as strict experiment settings.
 
 ## Benchmarks
 

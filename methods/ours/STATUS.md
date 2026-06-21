@@ -1,11 +1,7 @@
 # Ours
 
-Status: selected local source/config files copied from `/root/autodl-tmp/Lora-code`.
+Status: source required from project owner.
 
-Copied content:
+No published paper, official experiment code, or owner-approved source has been verified for this repository. Do not treat any placeholder files in this directory as runnable experiment settings.
 
-- `source/core/methods/ours_spectral_replay.py`
-- `configs/ours.yaml`
-- `configs/published_setting/*__ours__s123*.yaml`
-
-The local source repository was dirty at copy time. See `docs/source_manifest.md` before treating this as publish-ready code.
+See `docs/source_manifest.md`.
