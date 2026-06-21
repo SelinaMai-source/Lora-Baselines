@@ -10,7 +10,7 @@ Paper route B: "Unlocking Continual Learning Abilities in Language Models" (Find
 - Software ZIP URL: https://aclanthology.org/attachments/2024.findings-emnlp.379.software.zip
 - ACL software source path: `source/acl_software_unlocking_cl/`.
 
-Project-local replay source: `source/project_local/`.
+Project-local replay implementation: `source/project_local/baselines/basic_baselines/replay_lora/method.py`.
 
 Official O-LoRA reference source: https://github.com/cmnfriend/O-LoRA
 
@@ -18,7 +18,14 @@ Official O-LoRA reference commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`
 
 Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`
 
-Required replay modifications are documented in `REPRODUCIBILITY.md`: add a past-task replay buffer to sequential LoRA/O-LoRA training and use the replay ratio, task order, and evaluation protocol from the paper being reproduced. The ACL paper describes LoRAReplay as mixing 2% past-task data.
+Implemented mechanisms:
+
+- Sequential LoRA baseline plus a bounded past-task replay buffer.
+- Current-task training mixed with sampled previous-task examples; the current task is added to the buffer only after its training finishes.
+- Published replay configs use `replay_ratio: 0.02`, matching the ACL software route description of 2% past-task data.
+- Optional MIGU-style magnitude threshold gradient mask is available through `migu.enabled` and `migu.threshold`.
+
+Smoke validation imported and instantiated `ReplayLoRAMethod`; first segment used `0` replay examples, second segment used replay examples from the completed first segment, and the buffer grew to include both segments.
 
 Do not claim the ACL ZIP or project-local code is official code for the separate "Combining replay and LoRA" paper.
 

@@ -25,12 +25,14 @@ The extracted ACL package contains a `MIGU/` code tree with O-LoRA-derived impor
 
 ## Required Paper Modifications
 
-To reproduce a Replay LoRA baseline from the closest available code:
+The project-local Replay LoRA baseline implements the closest available replay route as follows:
 
-- Start from sequential LoRA/O-LoRA training for the target model and task stream.
-- Add an experience replay buffer containing past-task examples.
-- Mix current-task data with replayed past-task samples according to the cited paper setting. The ACL paper describes LoRAReplay as training new tasks on LoRA while mixing 2% past-task data.
+- Starts from sequential LoRA/O-LoRA training for the target model and task stream.
+- Adds an experience replay buffer containing completed past-task examples.
+- Mixes current-task data with replayed past-task samples in `ReplayLoRAMethod._mix_current_and_replay`. The ACL paper describes LoRAReplay as training new tasks on LoRA while mixing 2% past-task data, and the published replay configs now set `replay_ratio: 0.02`.
 - Keep LoRA hyperparameters, task order, replay ratio, seed count, and evaluation cadence aligned with the paper being reproduced.
-- If reproducing LoRA Replay + MIGU from the ACL paper, additionally apply MIGU's magnitude-based gradient update mask and threshold settings from that paper.
+- If reproducing LoRA Replay + MIGU from the ACL paper, enable the optional MIGU-style magnitude threshold gradient mask with `migu.enabled: true` and `migu.threshold`.
+
+Smoke validation imported and instantiated `ReplayLoRAMethod`, verified that the first task had no replay data, and verified that the second task mixed replay examples from the first completed task.
 
 Do not label the project-local or ACL ZIP code as official code for "Combining replay and LoRA" unless a later author source verifies that relationship.

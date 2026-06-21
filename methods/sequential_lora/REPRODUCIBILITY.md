@@ -12,7 +12,7 @@
 
 ## Source Relationship
 
-The project-local source captures the baseline/config view used by this package. O-LoRA provides the closest official continual-learning LoRA code base and can reproduce the same baseline protocol by disabling mechanisms beyond plain sequential LoRA training.
+The project-local source implements the baseline protocol used by this package. O-LoRA provides the closest official continual-learning LoRA code base and can reproduce the same baseline protocol by disabling mechanisms beyond plain sequential LoRA training.
 
 Do not describe this entry as an official Sequential LoRA release. It is a baseline reconstruction from public O-LoRA-style continual-learning code plus project-local configs.
 
@@ -24,5 +24,7 @@ To reproduce the baseline:
 - Keep the same model, task order, LoRA rank, optimizer, epochs, and evaluation cadence as the paper or project setting being compared.
 - Do not add replay buffers, orthogonal projection, LB-CL knowledge injection, MIGU gradient masking, adapter routing, or other continual-learning mechanisms.
 - Evaluate after each task or at the final checkpoint according to the cited comparison protocol.
+
+`source/project_local/baselines/basic_baselines/sequential_lora/method.py` enforces this by reusing the single `default` adapter and reporting zero replay/projection/injection/MIGU activity in training metrics. A synthetic smoke test imported and instantiated the method and verified those disabled-mechanism metrics.
 
 Any result using additional mechanisms should be labeled with that method name rather than Sequential LoRA.
