@@ -1,29 +1,14 @@
 label	official_url	stage	result	detail
-cleanup	methods/o_lora/source	preflight	ok	removed previous incomplete nested git directory only
-o-lora	https://github.com/cmnfriend/O-LoRA.git	clone	started	official git clone over local proxy
-method:o_lora	https://github.com/cmnfriend/O-LoRA.git	/root/Lora-Baselines/methods/o_lora/source	failed	git clone failed or timed out: 128
-o-lora	https://github.com/cmnfriend/O-LoRA.git	clone	ok	07117e1fc4a5f5ad9308a815a42cee8f46502dc8
-progressive-prompts	https://github.com/arazd/ProgressivePrompts.git	clone	started	official git clone over local proxy
-progressive-prompts	https://github.com/arazd/ProgressivePrompts.git	clone	ok	01572d6a73c0576b070ceee00dbe4f5bc278423f
-continual-t0	https://github.com/ThomasScialom/T0_continual_learning.git	clone	started	official git clone over local proxy
-continual-t0	https://github.com/ThomasScialom/T0_continual_learning.git	clone	ok	4841ca267b2447d1b58d677a992b6808d9eaacf2
-lfpt5	https://github.com/qcwthu/Lifelong-Fewshot-Language-Learning.git	clone	started	official git clone over local proxy
-method:progressive_prompts	https://github.com/arazd/ProgressivePrompts.git	/root/Lora-Baselines/methods/progressive_prompts/source	failed	git clone failed or timed out: 128
-method:continual_t0	https://github.com/ThomasScialom/T0_continual_learning.git	/root/Lora-Baselines/methods/continual_t0/source	success	4841ca267b2447d1b58d677a992b6808d9eaacf2
-method:lfpt5	https://github.com/qcwthu/Lifelong-Fewshot-Language-Learning.git	/root/Lora-Baselines/methods/lfpt5/source	success	cf7d17ce7de6a707d929d0542b3d5e639569855f
-benchmark:instrdialog	https://github.com/hyintell/CITB.git	/root/Lora-Baselines/benchmark/instrdialog/source	failed	git clone failed or timed out: 128
-lfpt5	https://github.com/qcwthu/Lifelong-Fewshot-Language-Learning	archive	started	official codeload archive over local proxy
-lfpt5	https://github.com/qcwthu/Lifelong-Fewshot-Language-Learning	archive	failed	archive extract failed with exit 2
-lfpt5	https://github.com/qcwthu/Lifelong-Fewshot-Language-Learning.git	sparse-clone	started	official git sparse checkout over local proxy, excluding generated transformers/build
-multiwoz	https://codeload.github.com/budzianowski/multiwoz/tar.gz/fe0c8e65cfcd8462bd33c86e35f21addc84ca82b	archive	started	official GitHub codeload bounded small archive
-citb	https://github.com/hyintell/CITB.git	git-clone	started	official shallow clone over local proxy in autodl-tmp
-multiwoz	https://codeload.github.com/budzianowski/multiwoz/tar.gz/fe0c8e65cfcd8462bd33c86e35f21addc84ca82b	archive	failed	IncompleteRead: IncompleteRead(786432 bytes read)
-multiwoz_evaluation	https://codeload.github.com/Tomiinek/MultiWOZ_Evaluation/tar.gz/cd3f0ee3a936a2d1c8567f440a0b71b215d7f991	archive	started	official GitHub codeload bounded small archive
-citb	https://github.com/hyintell/CITB.git	git-clone	failed	exit 128
-multiwoz	https://github.com/budzianowski/multiwoz.git	git-clone	started	official shallow clone over local proxy in autodl-tmp
-multiwoz_evaluation	https://codeload.github.com/Tomiinek/MultiWOZ_Evaluation/tar.gz/cd3f0ee3a936a2d1c8567f440a0b71b215d7f991	archive	ok	cd3f0ee3a936a2d1c8567f440a0b71b215d7f991; 8676124 bytes
-ct0_hf	https://huggingface.co/ThomasNLG/CT0-11B/raw/main/README.md	metadata	ok	4366 bytes
-ct0_hf	https://huggingface.co/ThomasNLG/CT0-11B/raw/main/config.json	metadata	ok	709 bytes
-ct0_hf	https://huggingface.co/ThomasNLG/CT0-11B/raw/main/generation_config.json	metadata	failed	not present/access interrupted; large weights intentionally not downloaded
-ct0_hf	https://huggingface.co/ThomasNLG/CT0-11B/raw/main/tokenizer_config.json	metadata	ok	2105 bytes
-ct0_hf	https://huggingface.co/ThomasNLG/CT0-11B/raw/main/special_tokens_map.json	metadata	ok	1786 bytes
+proxy	https://github.com	curl	ok	curl -I succeeded through http://127.0.0.1:7890
+proxy	https://github.com/cmnfriend/O-LoRA.git	git-ls-remote	ok	HEAD resolved to 07117e1fc4a5f5ad9308a815a42cee8f46502dc8 through http://127.0.0.1:7890
+method:o_lora	https://github.com/cmnfriend/O-LoRA.git	vendor	ok	commit 07117e1fc4a5f5ad9308a815a42cee8f46502dc8; generated logs/cache pruned from vendored source copy
+method:progressive_prompts	https://github.com/arazd/ProgressivePrompts.git	vendor	ok	commit 01572d6a73c0576b070ceee00dbe4f5bc278423f
+method:continual_t0	https://github.com/ThomasScialom/T0_continual_learning.git	vendor	ok	commit 4841ca267b2447d1b58d677a992b6808d9eaacf2
+method:lfpt5	https://github.com/qcwthu/Lifelong-Fewshot-Language-Learning.git	vendor	ok	commit cf7d17ce7de6a707d929d0542b3d5e639569855f; full checkout first hit No space left on device at transformers/build, generated build tree excluded
+ct0_hf	https://huggingface.co/ThomasNLG/CT0-11B	metadata	ok	README/config/tokenizer metadata saved; large model weights intentionally not downloaded
+benchmark:citb	https://github.com/hyintell/CITB.git	git-clone	failed	TLS early EOF / invalid index-pack output
+benchmark:citb	https://codeload.github.com/hyintell/CITB/tar.gz/bf50533b5bced4c388691ecc75e26773da96b3fd	archive	failed	repeated EOF / transfer closed after more than 36 minutes; no complete archive extracted
+benchmark:trace	https://github.com/BeyonderXX/TRACE.git	vendor	ok	commit 462e39f616134f4f819efeb3baea8638c03c7db4
+benchmark:multiwoz	https://codeload.github.com/budzianowski/multiwoz/tar.gz/fe0c8e65cfcd8462bd33c86e35f21addc84ca82b	archive	failed	IncompleteRead during official codeload attempt
+benchmark:multiwoz	https://github.com/budzianowski/multiwoz.git	git-clone	failed	TLS early EOF / invalid index-pack output
+benchmark:multiwoz_evaluation	https://github.com/Tomiinek/MultiWOZ_Evaluation.git	vendor	ok	commit cd3f0ee3a936a2d1c8567f440a0b71b215d7f991
