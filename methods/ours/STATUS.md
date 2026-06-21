@@ -1,7 +1,11 @@
 # Ours
 
-Status: source required from project owner.
+Status: project-owner local implementation vendored in `source/project_local_lora_code/`.
 
-No published paper, official experiment code, or owner-approved source has been verified for this repository. Do not treat any placeholder files in this directory as runnable experiment settings.
+Source: `/root/autodl-tmp/Lora-code`
 
-See `docs/source_manifest.md`.
+Local commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`
+
+Dirty status at vendoring time: dirty; see docs/source_manifest.md for summary
+
+This is project-local source, not a separately published external official repository. Large assets, model weights, logs, caches, results, archives, proxy configs, and generated outputs are intentionally excluded.

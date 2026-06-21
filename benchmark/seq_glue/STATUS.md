@@ -1,7 +1,7 @@
 # Seq-GLUE
 
-Status: no standalone official Seq-GLUE repository was verified in this environment.
+Status: no standalone official Seq-GLUE-only repository was verified. A project-local 8-task stream, conversion scripts, and published-setting configs are vendored in `source/project_local_seqglue/`.
 
-Use paper-specific official implementations only after confirming the exact GLUE task sequence and order. Candidate contexts include LFPT5 and Progressive Prompts, but they are not recorded here as a final strict source for Seq-GLUE.
+The local stream is `sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa`, stored as `seqglue_cl_tasks_train50_eval10.json`. Candidate external contexts include method-specific repositories such as LFPT5, Progressive Prompts, TRACE, and general continual-learning frameworks, but no single strict official Seq-GLUE source was verified here.
 
 See `docs/source_manifest.md`.
