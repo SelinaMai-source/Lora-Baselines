@@ -25,32 +25,38 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### Sequential LoRA
 
+- Official code status: closest reproducible code; no standalone official Sequential LoRA repository verified.
 - Downloaded: yes, as project-local baseline plus official O-LoRA reference.
-- Source path: `methods/sequential_lora/source/project_local`; official reference source at `methods/o_lora/source`.
+- Source path: `methods/sequential_lora/source/project_local`; closest reproducible external base at `methods/o_lora/source`.
 - Official URL: no separate official Sequential LoRA-only source verified; O-LoRA baseline context is https://github.com/cmnfriend/O-LoRA.
-- Official reference commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`.
+- Paper URL: not applicable as an independent method paper in this package; Sequential LoRA is a baseline protocol cited by O-LoRA-style continual-learning papers.
+- Base code used: O-LoRA official commit `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`.
 - Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
 - Proxy used: yes for official reference/public-source verification.
 - Mirror used: no.
 - LFS usage: no.
-- Official code status: closest reproducible code; no separate official Sequential LoRA-only repository was verified.
-- Required paper adaptation: use O-LoRA baseline/source as the official reference and run project-local sequential LoRA without replay, orthogonal constraints, LB-CL projection, routing, or prompt modules.
+- Required paper adaptation: train LoRA adapters sequentially over the task stream and keep replay, orthogonal projection, LB-CL injection, MIGU masks, routing, prompt modules, and other extra continual-learning mechanisms disabled.
 - Notes: see `methods/sequential_lora/REPRODUCIBILITY.md`; project-local baseline implementation/configs are included for the complete v1 package and must not be represented as an external official release.
 
 ### Replay LoRA
 
-- Downloaded: yes, as project-local replay baseline plus official O-LoRA reference.
-- Source path: `methods/replay_lora/source/project_local`; official reference source at `methods/o_lora/source`.
+- Official code status: closest reproducible code; no standalone official Replay LoRA repository verified.
+- Downloaded: yes, as project-local replay baseline, official O-LoRA reference, and ACL software source for the LoRA Replay baseline in "Unlocking Continual Learning Abilities in Language Models".
+- Source paths:
+  - Project-local replay baseline: `methods/replay_lora/source/project_local`.
+  - ACL software package: `methods/replay_lora/source/acl_software_unlocking_cl`.
+  - Closest external base: `methods/o_lora/source`.
+- Paper route A: "Combining replay and LoRA for continual learning in natural language understanding"; paper/code URL needs manual verification beyond bibliographic pages, and no author official code was verified.
+- Paper route B: "Unlocking Continual Learning Abilities in Language Models", https://aclanthology.org/2024.findings-emnlp.379/; PDF https://aclanthology.org/2024.findings-emnlp.379.pdf.
+- ACL Software ZIP URL: https://aclanthology.org/attachments/2024.findings-emnlp.379.software.zip.
 - Official URL: no separate official Replay LoRA-only source verified; O-LoRA baseline context is https://github.com/cmnfriend/O-LoRA.
-- Official reference commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`.
+- Base code used: O-LoRA official commit `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`; the ACL paper states its T5 continual-learning experiments are adapted from O-LoRA.
 - Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
 - Proxy used: yes for official reference/public-source verification.
 - Mirror used: no.
 - LFS usage: no.
-- Official code status: closest reproducible code; no standalone author GitHub for `Combining Replay and LoRA` was verified.
-- ACL closest reproducible source: `methods/replay_lora/source/acl_software_unlocking_cl`, downloaded from https://aclanthology.org/attachments/2024.findings-emnlp.379.software.zip for `Unlocking Continual Learning Abilities in Language Models` (https://aclanthology.org/2024.findings-emnlp.379/).
-- Required paper adaptation: use O-LoRA-derived continual LoRA training and add replay memory according to the target paper/ACL software configs.
-- Notes: see `methods/replay_lora/REPRODUCIBILITY.md`; project-local replay implementation/configs are included and must not be represented as an external official release.
+- Required paper adaptation: add a past-task replay buffer to sequential LoRA/O-LoRA training; mix current-task samples with replayed past-task samples according to the cited paper setting. The ACL paper describes LoRAReplay as mixing 2% past-task data; LoRA Replay + MIGU additionally applies the MIGU magnitude-based gradient mask and threshold settings.
+- Notes: see `methods/replay_lora/REPRODUCIBILITY.md`; project-local replay implementation/configs and the ACL ZIP are included as reproducible sources and must not be represented as an external official release for the separate "Combining replay and LoRA" paper.
 
 ### O-LoRA
 
@@ -65,16 +71,17 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### LB-CL
 
-- Downloaded: yes, as project-local scaffold/configs; no official external code was verified.
-- Source path: `methods/lb_cl/source/project_local`.
-- Official URL: no official code URL verified. Paper pages checked include OpenReview https://openreview.net/forum?id=ZxtaNh5UYB and NeurIPS https://neurips.cc/virtual/2024/poster/94599.
+- Official code status: no official verified.
+- Downloaded: yes, as project-local scaffold/configs plus O-LoRA closest reproducible base.
+- Source path: `methods/lb_cl/source/project_local`; closest reproducible external base at `methods/o_lora/source`.
+- Official URL: no official code URL verified. Paper pages checked include OpenReview https://openreview.net/forum?id=ZxtaNh5UYB, NeurIPS https://neurips.cc/virtual/2024/poster/94599, and the proceedings PDF https://proceedings.neurips.cc/paper_files/paper/2024/file/b0bc711f48724237b38823c4d9cee10b-Paper-Conference.pdf.
+- Paper URL: https://openreview.net/forum?id=ZxtaNh5UYB.
+- Base code used: O-LoRA official commit `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`.
 - Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
 - Proxy used: yes for web/GitHub verification.
 - Mirror used: no.
 - LFS usage: no.
-- Official code status: closest reproducible code; web searches and paper pages did not expose an author GitHub/code release.
-- Closest reproducible base: O-LoRA official source plus project-local SVD/projection scaffold/config view.
-- Required paper adaptation: start from the O-LoRA continual LoRA pipeline and replace the adapter update with the LB-CL SVD/projection scaffold/configs.
+- Required paper adaptation: implement LB-CL's SVD-triplet sensitivity scoring, previous-task knowledge extraction/injection into new low-rank parameters, and orthogonal-subspace training on top of the O-LoRA-style baseline.
 - Notes: see `methods/lb_cl/REPRODUCIBILITY.md`; do not claim strict official LB-CL paper code without later author-source or project-owner equivalence verification.
 
 ### Progressive Prompts
@@ -181,14 +188,14 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### Seq-GLUE
 
+- Official code status: project-local benchmark stream; no standalone official Seq-GLUE-only repository verified.
 - Downloaded: yes, as project-local benchmark stream/configs/scripts.
 - Source path: `benchmark/seq_glue/source/project_local`.
 - Official URL: no standalone official Seq-GLUE-only URL verified. Official GLUE source is https://gluebenchmark.com/; candidate continual-learning contexts include method-specific repositories such as LFPT5, Progressive Prompts, TRACE, and general continual-learning frameworks, but they do not establish one strict Seq-GLUE-only official source for this repo.
+- Paper/source setting: the local stream order is the project published setting and should be cited through the CL paper/project setting that adopts this order, not as an independent official Seq-GLUE repository.
 - Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
 - Proxy used: yes for web verification.
 - Mirror used: no.
 - LFS usage: no.
-- Official code status: closest reproducible benchmark construction; no standalone official Seq-GLUE-only repository was verified.
-- Closest reproducible base: official GLUE tasks plus project-local 8-task stream/configs/scripts.
-- Required benchmark adaptation: construct the CL stream as `sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa` and keep the project-local published-setting splits/configs.
+- Required construction: use the GLUE/SuperGLUE task definitions, construct the stream as `sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa`, and keep the local sampling/formatting policy from `seqglue_cl_tasks_train50_eval10.json`.
 - Notes: see `benchmark/seq_glue/REPRODUCIBILITY.md`; published-setting configs for 8 methods are included.
