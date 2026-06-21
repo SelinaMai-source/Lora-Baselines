@@ -8,7 +8,7 @@ This repository is organized for selected LoRA continual learning methods and be
 - No git submodules are used, because `.gitmodules` would add a root-level ordinary file.
 - Vendored official sources live under each entry's `source/` directory with nested `.git` directories removed.
 - Large model weights, gated assets, generated experiment outputs, caches, logs, archives, proxy configs, and secrets are not vendored.
-- Git LFS is used only for official data files that exceed GitHub's 100MB per-file limit.
+- Git LFS is used for complete benchmark files that exceed GitHub's 100MB per-file limit; this requires the hidden root `.gitattributes` file.
 
 ## Network, Proxy, And LFS Verification
 
@@ -25,25 +25,27 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### Sequential LoRA
 
-- Downloaded: yes, as project-local wrapper/config plus shared official baseline context.
-- Source path: `methods/sequential_lora/source/project_local_wrapper`; also references `methods/o_lora/source`.
+- Downloaded: yes, as project-local baseline plus official O-LoRA reference.
+- Source path: `methods/sequential_lora/source/project_local`; official reference source at `methods/o_lora/source`.
 - Official URL: no separate official Sequential LoRA-only source verified; O-LoRA baseline context is https://github.com/cmnfriend/O-LoRA.
-- Commit/local commit: O-LoRA official commit `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`; project-local source commit `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
-- Proxy used: yes for public-source verification.
+- Official reference commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
+- Proxy used: yes for official reference/public-source verification.
 - Mirror used: no.
 - LFS usage: no.
-- Notes: no separate official source was verified. The wrapper/config view is provided for reproducibility of this repo's published-setting pipeline and must not be represented as an external official release.
+- Notes: no separate official Sequential LoRA repository was verified; project-local baseline implementation/configs are included for the complete v1 package and must not be represented as an external official release.
 
 ### Replay LoRA
 
-- Downloaded: yes, as project-local wrapper/config plus shared official baseline context.
-- Source path: `methods/replay_lora/source/project_local_wrapper`; also references `methods/o_lora/source`.
+- Downloaded: yes, as project-local replay baseline plus official O-LoRA reference.
+- Source path: `methods/replay_lora/source/project_local`; official reference source at `methods/o_lora/source`.
 - Official URL: no separate official Replay LoRA-only source verified; O-LoRA baseline context is https://github.com/cmnfriend/O-LoRA.
-- Commit/local commit: O-LoRA official commit `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`; project-local source commit `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
-- Proxy used: yes for public-source verification.
+- Official reference commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
+- Proxy used: yes for official reference/public-source verification.
 - Mirror used: no.
 - LFS usage: no.
-- Notes: no separate official source was verified. The wrapper/config view is provided for reproducibility of this repo's published-setting pipeline and must not be represented as an external official release.
+- Notes: no separate official Replay LoRA repository was verified; project-local replay implementation/configs are included for the complete v1 package and must not be represented as an external official release.
 
 ### O-LoRA
 
@@ -58,14 +60,14 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### LB-CL
 
-- Downloaded: yes, project-local implementation; no official external code was verified.
-- Source path: `methods/lb_cl/source/project_local_implementation`.
+- Downloaded: yes, as project-local scaffold/configs; no official external code was verified.
+- Source path: `methods/lb_cl/source/project_local`.
 - Official URL: no official code URL verified. Paper pages checked include OpenReview https://openreview.net/forum?id=ZxtaNh5UYB and NeurIPS https://neurips.cc/virtual/2024/poster/94599.
-- Commit/local commit: project-local source commit `d711d912926c58c13acc02b3c3e4cfddd9f2c969`; local source working tree was dirty at vendoring time.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
 - Proxy used: yes for web/GitHub verification.
 - Mirror used: no.
 - LFS usage: no.
-- Not official reason: web searches and paper pages did not expose an author GitHub/code release. The provided code is the project-local SVD/projection scaffold/config view and should not be claimed as strict official LB-CL paper code without later author-source verification.
+- Not official reason: web searches and paper pages did not expose an author GitHub/code release. The provided code is the project-local SVD/projection scaffold/config view and should not be claimed as strict official LB-CL paper code without later author-source or project-owner equivalence verification.
 
 ### Progressive Prompts
 
@@ -101,13 +103,12 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### Ours
 
-- Downloaded: yes, project-owner local implementation.
-- Source path: `methods/ours/source/project_local_lora_code`.
-- Official URL: project-owner local source, not an external published official repository.
-- Local source path: `/root/autodl-tmp/Lora-code`.
-- Local commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`.
+- Downloaded: yes, as project-owner local source snapshot.
+- Source path: `methods/ours/source/project_local`.
+- Official URL: project-owner local source `/root/autodl-tmp/Lora-code`, not an external published official repository.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`.
 - Local dirty status: dirty at vendoring time; 143 status entries were present, including modified `core/train.py`, `core/evaluate.py`, `core/metrics_utils.py`, `core/wandb_tracker.py`, modified/new `configs/paper/published_setting/*`, and local generated/state/cache paths that were excluded.
-- Proxy used: not needed for the local source itself.
+- Proxy used: not applicable for the local source itself.
 - Mirror used: no.
 - LFS usage: no.
 - Notes: vendored subset includes `core/`, relevant `baselines/`, `configs/paper/published_setting`, selected scripts, and the small Seq-GLUE processed stream. It intentionally excludes model weights, Hugging Face caches, results, logs, W&B runs, archives, conda/env folders, proxy configs, and generated outputs.
@@ -116,7 +117,7 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### InstrDialog
 
-- Downloaded: yes.
+- Downloaded: yes, complete official CITB source/data.
 - Source path: `benchmark/instrdialog/source`.
 - Official URL: https://github.com/hyintell/CITB
 - Commit: `bf50533b5bced4c388691ecc75e26773da96b3fd`.
@@ -128,7 +129,7 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### InstrDialog++
 
-- Downloaded: yes, using shared official CITB source.
+- Downloaded: yes, via shared complete CITB source.
 - Source path: uses `benchmark/instrdialog/source`.
 - Official URL: https://github.com/hyintell/CITB
 - Commit: `bf50533b5bced4c388691ecc75e26773da96b3fd` for the shared CITB source.
@@ -149,7 +150,7 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### MultiWOZ NLG Dataset
 
-- Downloaded: yes.
+- Downloaded: yes, complete official MultiWOZ source/data with Git LFS for oversized JSON files.
 - Source path: `benchmark/multiwoz_nlg/source/multiwoz`.
 - Official URL: https://github.com/budzianowski/multiwoz
 - Commit: `fe0c8e65cfcd8462bd33c86e35f21addc84ca82b`.
@@ -157,8 +158,8 @@ This repository is organized for selected LoRA continual learning methods and be
 - Local source status: official clone at the target commit with untracked extracted data directories/files: `data/MultiWOZ_2.1/`, `data/MultiWOZ_2.2/data.json`, and `data/__MACOSX/`; `__MACOSX` was excluded as unzip metadata.
 - Proxy used: yes.
 - Mirror used: no.
-- LFS usage: yes for `data/MultiWOZ_2.1/data.json` and `data/MultiWOZ_2.2/data.json` because they exceed 100MB.
-- Notes: complete official data directory is vendored, including unzipped `MultiWOZ_2.1/data.json` and `MultiWOZ_2.2/data.json` through Git LFS.
+- LFS usage: yes for `data/MultiWOZ_2.1/data.json` and `data/MultiWOZ_2.2/data.json`, which exceed GitHub's 100MB per-file limit.
+- Notes: complete official data directory is vendored, including unzipped `MultiWOZ_2.1/data.json` and `MultiWOZ_2.2/data.json` through Git LFS; nested `.git` removed.
 
 ### MultiWOZ Evaluation
 
@@ -172,10 +173,10 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### Seq-GLUE
 
-- Downloaded: yes, project-local stream/config/scripts; no standalone official Seq-GLUE-only source verified.
-- Source path: `benchmark/seq_glue/source/project_local_seqglue`.
-- Official URL: no standalone official Seq-GLUE-only URL verified. Candidate context sources include method-specific official repositories such as LFPT5, Progressive Prompts, TRACE, and general continual-learning frameworks, but they do not establish one strict Seq-GLUE-only official source for this repo.
-- Commit/local commit: project-local source commit `d711d912926c58c13acc02b3c3e4cfddd9f2c969`; local source working tree was dirty at vendoring time.
+- Downloaded: yes, as project-local benchmark stream/configs/scripts.
+- Source path: `benchmark/seq_glue/source/project_local`.
+- Official URL: no standalone official Seq-GLUE-only URL verified. Official GLUE source is https://gluebenchmark.com/; candidate continual-learning contexts include method-specific repositories such as LFPT5, Progressive Prompts, TRACE, and general continual-learning frameworks, but they do not establish one strict Seq-GLUE-only official source for this repo.
+- Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969` with dirty local working tree.
 - Proxy used: yes for web verification.
 - Mirror used: no.
 - LFS usage: no.
