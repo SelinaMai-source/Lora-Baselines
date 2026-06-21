@@ -18,7 +18,17 @@ proxy config directories, tokens, or downloaded model weight files.
 
 Observed on 2026-06-22:
 
-- `/root/autodl-tmp` had only about 3.1G free (`/dev/md0` was 98% used).
+- `/root/autodl-tmp` had about 43G free before the latest T5 download attempt.
+- `/root/autodl-tmp/model_cache/meta-llama/Llama-3.1-8B-Instruct` contains a
+  complete local safetensors snapshot and is usable by the current causal-LM
+  ours runner. It is used only for caveat-ready full-data runs, not as the
+  paper-strict T5 comparison backbone.
+- `/root/autodl-tmp/model_cache/hf_snapshots/t5-large` contains partial
+  Hugging Face metadata/config/tokenizer files. Weight download was resumed via
+  proxy and is still in progress/subject to HF availability.
+- `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt` is the
+  target path for the CITB base checkpoint. Download was started via proxy and
+  is still in progress/subject to HF availability.
 - `/root/autodl-tmp/model_cache/ThomasNLG/CT0-11B` exists and contains small
   Hugging Face config/tokenizer files only. Size observed: about 1.4M.
 - `/root/autodl-tmp/model_cache/lfpt5/t5.1.1.lm100k` exists and contains
@@ -27,9 +37,10 @@ Observed on 2026-06-22:
   about 128K.
 - `/root/autodl-tmp/model_cache/lfpt5/t5.1.1.lm100k-pytorch` exists but is empty.
 
-No large model is fully ready yet. Full downloads are blocked by the current
-free-space shortage. LFPT5 also needs `gsutil` or an equivalent Google Cloud
-Storage downloader for the official `gs://t5-data/...` checkpoint objects.
+A local Llama causal-LM snapshot is ready for the current implementation.
+T5-family assets are not fully ready yet. LFPT5 also needs `gsutil` or an
+equivalent Google Cloud Storage downloader for the official `gs://t5-data/...`
+checkpoint objects.
 
 ## v2 CCF-A Required Assets
 
@@ -44,9 +55,15 @@ Required:
 Current state:
 
 - Official CITB source/data are vendored.
-- The T5-small LM-adapted and 100-SuperNI-init runtime checkpoint path is not
-  configured for ours yet.
-- Do not use Llama-3.1 diagnostic configs for the main CITB comparison.
+- Official CITB source/data are also downloaded outside Git at
+  `/root/autodl-tmp/lora-baselines-run_v1/external_sources/citb`.
+- A `google/t5-small-lm-adapt` snapshot download has been started under
+  `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt`.
+- CITB does not provide a ready-made 100-SuperNI-init checkpoint in the README;
+  it provides the Stage-1 training command using `google/t5-small-lm-adapt`.
+- The current ours runner still lacks the T5-small seq2seq PEFT path. The
+  started caveat-ready CITB queue uses the local Llama causal-LM snapshot and
+  records that caveat in the runtime config.
 
 ### Standard T5-Large PEFT CL
 
@@ -59,9 +76,15 @@ Required:
 Current state:
 
 - O-LoRA source/configs are vendored.
+- O-LoRA, LFPT5, and Progressive Prompts official sources are also downloaded
+  outside Git under `/root/autodl-tmp/lora-baselines-run_v1/external_sources`.
 - The local `seqglue` stream is not the official standard PEFT CL suite.
-- T5-large checkpoint availability and ours runner compatibility must be
-  verified before launch.
+- Official O-LoRA streams are generated under
+  `/root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite/standard_peft`.
+- T5-large checkpoint download is partial/in progress at
+  `/root/autodl-tmp/model_cache/hf_snapshots/t5-large`.
+- Ours runner compatibility still blocks launch because the current path is
+  causal-LM PEFT, not T5 seq2seq PEFT.
 
 ### Dialogue NLG / MultiWOZ CL
 
@@ -73,8 +96,12 @@ Required:
 Current state:
 
 - Generic MultiWOZ and MultiWOZ evaluation sources are vendored.
-- ARPER and ToDCL sources are not vendored yet.
-- The current local MultiWOZ train50/eval10 stream is diagnostic only.
+- ARPER and ToDCL official sources are downloaded outside Git under
+  `/root/autodl-tmp/lora-baselines-run_v1/external_sources`.
+- ARPER WOZ3 streams are generated under
+  `/root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite/arper`.
+- The current local MultiWOZ train50/eval10 stream is diagnostic only and is
+  not used as the final ARPER stream.
 
 ## Continual-T0 / CT0
 

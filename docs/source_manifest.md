@@ -8,7 +8,7 @@ The v2 branch prepares exactly three main experiment suites:
 
 - CITB Continual Instruction Tuning from https://aclanthology.org/2023.findings-emnlp.633/ and https://github.com/hyintell/CITB.
 - Standard T5-Large PEFT Continual Learning from O-LoRA, LFPT5, Progressive Prompts, and LB-CL paper/code sources. LB-CL has no verified official code repository.
-- Dialogue NLG / MultiWOZ Continual Learning from ARPER first, ToDCL as extension/backup. ARPER and ToDCL official sources are linked but not vendored in this repository yet.
+- Dialogue NLG / MultiWOZ Continual Learning from ARPER first, ToDCL as extension/backup. ARPER and ToDCL official sources are downloaded outside Git under `/root/autodl-tmp/lora-baselines-run_v1/external_sources`.
 
 ## Repository Layout Policy
 
@@ -206,22 +206,30 @@ The v2 branch prepares exactly three main experiment suites:
 
 ### ARPER / Continual Learning for NLG
 
-- Downloaded: no.
-- Source path: not vendored yet.
+- Downloaded: yes, outside Git.
+- Source path: `/root/autodl-tmp/lora-baselines-run_v1/external_sources/arper`.
 - Official URL: https://github.com/MiFei/Continual-Learning-for-NLG
 - Paper URL: https://aclanthology.org/2020.findings-emnlp.310/
-- Verification status: official paper/repo links recorded for v2; local source/data conversion still TODO.
+- Commit: `99019defe6bf35e8459ca6abd6f25882724bc956`.
+- Proxy used: yes.
+- Mirror used: no.
+- Verification status: official GitHub URL, commit hash, README, `resource/woz3` layout, `run.sh`, `config/config.cfg`, and `bleu.py` inspected.
 - Intended v2 role: primary Dialogue NLG / MultiWOZ CL suite, using MultiWOZ-2.0 domain/dialogue-act intent streams and BLEU-4/SER.
-- Notes: do not claim local `multiwoz_nlg` train50/eval10 diagnostic data as ARPER.
+- Prepared runtime data: `/root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite/arper`.
+- Notes: do not claim local `multiwoz_nlg` train50/eval10 diagnostic data as ARPER; current ours runner still needs a dialogue-NLG-compatible backbone and SER/EER scorer integration.
 
 ### ToDCL
 
-- Downloaded: no.
-- Source path: not vendored yet.
+- Downloaded: yes, outside Git.
+- Source path: `/root/autodl-tmp/lora-baselines-run_v1/external_sources/todcl`.
 - Official URL: https://github.com/andreamad8/ToDCL
 - Paper URL: https://aclanthology.org/2021.emnlp-main.590/
-- Verification status: official paper/repo links recorded for v2; local source/data conversion still TODO.
+- Commit: `e70c1edf937f6eb570296ea2897dbc8d6815bc6d`.
+- Proxy used: yes.
+- Mirror used: no.
+- Verification status: official GitHub URL, commit hash, README, `data/download.sh`, `train.py`, and `scorer.py` inspected.
 - Intended v2 role: extension/backup Dialogue NLG / E2E suite after ARPER alignment, using 37-domain ToD NLG/E2E and BLEU/EER.
+- Notes: upstream SGD, Taskmaster, and MultiWOZ downloads/preprocessing are not complete yet for a ToDCL replacement run.
 
 ### Seq-GLUE
 
