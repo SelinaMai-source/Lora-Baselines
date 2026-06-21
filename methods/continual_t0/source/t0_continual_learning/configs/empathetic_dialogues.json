@@ -1,0 +1,20 @@
+{
+   "hf_dataset_config": {
+      "name": "empathetic_dialogues",
+      "option": null,
+      "src": [
+         "context_prompt",
+         "context_emotion",
+         "input_text"
+      ],
+      "tgt": "output_text"
+   },
+   "prompt_T0": {
+      "template_name": null
+   },
+   "prompt_cutsom": {
+      "dialogue_with_emotion": [
+         "The associated emotion is \"[context_emotion]\" and the input prompt is \"[context_prompt]\". Now what would be your response, given the following dialogue context:\n\n===\n\n[input_text]"
+      ]
+   }
+}

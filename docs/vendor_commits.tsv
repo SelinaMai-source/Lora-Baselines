@@ -1,0 +1,8 @@
+label	official_url	commit	target_path	proxy	mirror	verification
+o_lora	https://github.com/cmnfriend/O-LoRA.git	07117e1fc4a5f5ad9308a815a42cee8f46502dc8	methods/o_lora/source	yes	no	official git clone over local proxy; HEAD verified with git ls-remote
+progressive_prompts	https://github.com/arazd/ProgressivePrompts.git	01572d6a73c0576b070ceee00dbe4f5bc278423f	methods/progressive_prompts/source	yes	no	official git clone over local proxy; HEAD verified with git ls-remote
+continual_t0	https://github.com/ThomasScialom/T0_continual_learning.git	4841ca267b2447d1b58d677a992b6808d9eaacf2	methods/continual_t0/source	yes	no	official git clone over local proxy; HEAD verified with git ls-remote
+continual_t0_hf_metadata	https://huggingface.co/ThomasNLG/CT0-11B	0bcf0791efba90ff3e47f48fc7377e644339fb7a	methods/continual_t0/hf_metadata	yes	no	official Hugging Face metadata/small text files only; weights intentionally not downloaded
+lfpt5	https://github.com/qcwthu/Lifelong-Fewshot-Language-Learning.git	cf7d17ce7de6a707d929d0542b3d5e639569855f	methods/lfpt5/source	yes	no	official GitHub source at resolved HEAD; no non-official substitute
+trace	https://github.com/BeyonderXX/TRACE.git	462e39f616134f4f819efeb3baea8638c03c7db4	benchmark/trace/source	yes	no	official GitHub source at resolved HEAD; no non-official substitute
+multiwoz_evaluation	https://github.com/Tomiinek/MultiWOZ_Evaluation.git	cd3f0ee3a936a2d1c8567f440a0b71b215d7f991	benchmark/multiwoz_nlg/source_evaluation	yes	no	official GitHub codeload archive for resolved HEAD

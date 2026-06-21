@@ -1,0 +1,76 @@
+{
+  "_id": "634fe3fedc10894a3f642d9f",
+  "disabled": false,
+  "gated": false,
+  "id": "ThomasNLG/CT0-11B",
+  "lastModified": "2022-10-20T17:02:33.000Z",
+  "pipeline_tag": null,
+  "private": false,
+  "sha": "0bcf0791efba90ff3e47f48fc7377e644339fb7a",
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "size": null
+    },
+    {
+      "rfilename": "README.md",
+      "size": null
+    },
+    {
+      "rfilename": "all_results.json",
+      "size": null
+    },
+    {
+      "rfilename": "config.json",
+      "size": null
+    },
+    {
+      "rfilename": "eval_results.json",
+      "size": null
+    },
+    {
+      "rfilename": "pytorch_model.bin",
+      "size": null
+    },
+    {
+      "rfilename": "special_tokens_map.json",
+      "size": null
+    },
+    {
+      "rfilename": "spiece.model",
+      "size": null
+    },
+    {
+      "rfilename": "tokenizer.json",
+      "size": null
+    },
+    {
+      "rfilename": "tokenizer_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "train_results.json",
+      "size": null
+    },
+    {
+      "rfilename": "trainer_state.json",
+      "size": null
+    },
+    {
+      "rfilename": "training_args.bin",
+      "size": null
+    }
+  ],
+  "tags": [
+    "transformers",
+    "pytorch",
+    "t5",
+    "text2text-generation",
+    "en",
+    "arxiv:2205.12393",
+    "license:apache-2.0",
+    "text-generation-inference",
+    "endpoints_compatible",
+    "region:us"
+  ]
+}

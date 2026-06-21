@@ -1,7 +1,9 @@
 # Progressive Prompts
 
-Status: official source identified but not vendored because GitHub clone/API timed out in this environment.
+Status: official source vendored in `source/`.
 
 Official source: https://github.com/arazd/ProgressivePrompts
 
-See `docs/source_manifest.md` and `docs/download_official_sources.sh`.
+Commit: `01572d6a73c0576b070ceee00dbe4f5bc278423f`
+
+See `docs/source_manifest.md` and `docs/vendor_commits.tsv`.

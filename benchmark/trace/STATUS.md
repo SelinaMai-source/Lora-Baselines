@@ -1,7 +1,9 @@
 # TRACE
 
-Status: official source identified but not vendored because GitHub clone/API timed out in this environment.
+Status: official source vendored in `source/`.
 
 Official source: https://github.com/BeyonderXX/TRACE
 
-See `docs/source_manifest.md` and `docs/download_official_sources.sh`.
+Commit: `462e39f616134f4f819efeb3baea8638c03c7db4`
+
+Large external datasets/checkpoints are intentionally not downloaded. See `docs/source_manifest.md` and `docs/vendor_commits.tsv`.

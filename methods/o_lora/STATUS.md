@@ -1,7 +1,9 @@
 # O-LoRA
 
-Status: official source identified but not vendored because GitHub clone/API timed out in this environment.
+Status: official source vendored in `source/`.
 
 Official source: https://github.com/cmnfriend/O-LoRA
 
-See `docs/source_manifest.md` and `docs/download_official_sources.sh`.
+Commit: `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`
+
+See `docs/source_manifest.md` and `docs/vendor_commits.tsv`.
