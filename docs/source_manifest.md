@@ -33,7 +33,9 @@ This repository is organized for selected LoRA continual learning methods and be
 - Proxy used: yes for official reference/public-source verification.
 - Mirror used: no.
 - LFS usage: no.
-- Notes: no separate official Sequential LoRA repository was verified; project-local baseline implementation/configs are included for the complete v1 package and must not be represented as an external official release.
+- Official code status: closest reproducible code; no separate official Sequential LoRA-only repository was verified.
+- Required paper adaptation: use O-LoRA baseline/source as the official reference and run project-local sequential LoRA without replay, orthogonal constraints, LB-CL projection, routing, or prompt modules.
+- Notes: see `methods/sequential_lora/REPRODUCIBILITY.md`; project-local baseline implementation/configs are included for the complete v1 package and must not be represented as an external official release.
 
 ### Replay LoRA
 
@@ -45,7 +47,10 @@ This repository is organized for selected LoRA continual learning methods and be
 - Proxy used: yes for official reference/public-source verification.
 - Mirror used: no.
 - LFS usage: no.
-- Notes: no separate official Replay LoRA repository was verified; project-local replay implementation/configs are included for the complete v1 package and must not be represented as an external official release.
+- Official code status: closest reproducible code; no standalone author GitHub for `Combining Replay and LoRA` was verified.
+- ACL closest reproducible source: `methods/replay_lora/source/acl_software_unlocking_cl`, downloaded from https://aclanthology.org/attachments/2024.findings-emnlp.379.software.zip for `Unlocking Continual Learning Abilities in Language Models` (https://aclanthology.org/2024.findings-emnlp.379/).
+- Required paper adaptation: use O-LoRA-derived continual LoRA training and add replay memory according to the target paper/ACL software configs.
+- Notes: see `methods/replay_lora/REPRODUCIBILITY.md`; project-local replay implementation/configs are included and must not be represented as an external official release.
 
 ### O-LoRA
 
@@ -67,7 +72,10 @@ This repository is organized for selected LoRA continual learning methods and be
 - Proxy used: yes for web/GitHub verification.
 - Mirror used: no.
 - LFS usage: no.
-- Not official reason: web searches and paper pages did not expose an author GitHub/code release. The provided code is the project-local SVD/projection scaffold/config view and should not be claimed as strict official LB-CL paper code without later author-source or project-owner equivalence verification.
+- Official code status: closest reproducible code; web searches and paper pages did not expose an author GitHub/code release.
+- Closest reproducible base: O-LoRA official source plus project-local SVD/projection scaffold/config view.
+- Required paper adaptation: start from the O-LoRA continual LoRA pipeline and replace the adapter update with the LB-CL SVD/projection scaffold/configs.
+- Notes: see `methods/lb_cl/REPRODUCIBILITY.md`; do not claim strict official LB-CL paper code without later author-source or project-owner equivalence verification.
 
 ### Progressive Prompts
 
@@ -180,4 +188,7 @@ This repository is organized for selected LoRA continual learning methods and be
 - Proxy used: yes for web verification.
 - Mirror used: no.
 - LFS usage: no.
-- Notes: local stream is `seqglue_cl_tasks_train50_eval10.json` with 8 tasks: `sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa`; published-setting configs for 8 methods are included.
+- Official code status: closest reproducible benchmark construction; no standalone official Seq-GLUE-only repository was verified.
+- Closest reproducible base: official GLUE tasks plus project-local 8-task stream/configs/scripts.
+- Required benchmark adaptation: construct the CL stream as `sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa` and keep the project-local published-setting splits/configs.
+- Notes: see `benchmark/seq_glue/REPRODUCIBILITY.md`; published-setting configs for 8 methods are included.
