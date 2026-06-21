@@ -75,7 +75,20 @@ def smoke_sequential_lora() -> dict[str, Any]:
     metrics = method.train_on_segment(segment=_segment(0), model=model, lora=lora, lr=1e-3, epochs=1, batch_size=1)
     assert metrics["batches"] == 2
     assert start["active_adapter"] == "default"
-    return {"batches": metrics["batches"], "active_adapter": metrics["active_adapter"]}
+    assert metrics["replay_examples_used"] == 0
+    assert metrics["projection_applied_calls"] == 0
+    assert metrics["lbcl_injected_triplets"] == 0
+    assert metrics["migu_masked_parameters"] == 0
+    return {
+        "batches": metrics["batches"],
+        "active_adapter": metrics["active_adapter"],
+        "disabled_mechanism_metrics": {
+            "replay_examples_used": metrics["replay_examples_used"],
+            "projection_applied_calls": metrics["projection_applied_calls"],
+            "lbcl_injected_triplets": metrics["lbcl_injected_triplets"],
+            "migu_masked_parameters": metrics["migu_masked_parameters"],
+        },
+    }
 
 
 def smoke_replay_lora() -> dict[str, Any]:
@@ -91,8 +104,15 @@ def smoke_replay_lora() -> dict[str, Any]:
     method.on_segment_start(segment=_segment(1), model=model, lora=lora)
     second = method.train_on_segment(segment=_segment(1), model=model, lora=lora, lr=1e-3, epochs=1, batch_size=2)
     assert first["replay_buffer_size"] == 2
+    assert first["replay_examples_used"] == 0
+    assert second["replay_examples_used"] > 0
     assert second["replay_buffer_size"] == 4
-    return {"buffer_after_second_segment": second["replay_buffer_size"], "batches": second["batches"]}
+    return {
+        "first_replay_examples_used": first["replay_examples_used"],
+        "second_replay_examples_used": second["replay_examples_used"],
+        "buffer_after_second_segment": second["replay_buffer_size"],
+        "batches": second["batches"],
+    }
 
 
 def smoke_lb_cl() -> dict[str, Any]:
