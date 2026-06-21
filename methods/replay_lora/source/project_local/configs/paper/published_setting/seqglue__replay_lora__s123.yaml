@@ -73,7 +73,7 @@ paper:
   published_setting_note: Seq-GLUE 8-task train50/eval10
 baseline_name: replay_lora
 replay:
-  enabled: false
+  enabled: true
   buffer_size: 10
-  replay_ratio: 0.3
+  replay_ratio: 0.02
   strategy: uniform

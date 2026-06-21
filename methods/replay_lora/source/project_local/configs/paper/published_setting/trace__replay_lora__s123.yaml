@@ -50,7 +50,7 @@ baseline_name: replay_lora
 replay:
   enabled: true
   buffer_size: 50
-  replay_ratio: 0.3
+  replay_ratio: 0.02
   strategy: uniform
 output:
   run_name: trace_full_replay_lora_s123

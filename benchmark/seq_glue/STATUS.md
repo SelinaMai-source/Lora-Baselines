@@ -15,3 +15,6 @@ The stream is a project-local published-setting reconstruction from GLUE/SuperGL
 See `REPRODUCIBILITY.md` and `docs/source_manifest.md`.
 
 See `REPRODUCIBILITY.md` for closest reproducible code and paper-adaptation rules.
+Implementation status: implemented as a validated project-local stream at `source/project_local/data/processed/seqglue_cl_tasks_train50_eval10.json`, with conversion scripts under `source/project_local/scripts/`.
+
+Smoke validation: `python docs/smoke_implemented_methods.py` passed; stream order and 50 train / 10 eval examples per segment were verified.

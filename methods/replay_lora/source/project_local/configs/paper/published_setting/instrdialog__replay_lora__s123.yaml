@@ -44,7 +44,7 @@ train:
 replay:
   enabled: true
   buffer_size: 50
-  replay_ratio: 0.3
+  replay_ratio: 0.02
   strategy: uniform
 output:
   run_name: published_instrdialog_replay_lora_s123

@@ -36,6 +36,8 @@ This repository is organized for selected LoRA continual learning methods and be
 - Mirror used: no.
 - LFS usage: no.
 - Required paper adaptation: train LoRA adapters sequentially over the task stream and keep replay, orthogonal projection, LB-CL injection, MIGU masks, routing, prompt modules, and other extra continual-learning mechanisms disabled.
+- Implementation path: `methods/sequential_lora/source/project_local/baselines/basic_baselines/sequential_lora/method.py`.
+- Smoke validation: `python docs/smoke_implemented_methods.py` passed for synthetic sequential LoRA training.
 - Notes: see `methods/sequential_lora/REPRODUCIBILITY.md`; project-local baseline implementation/configs are included for the complete v1 package and must not be represented as an external official release.
 
 ### Replay LoRA
@@ -56,6 +58,8 @@ This repository is organized for selected LoRA continual learning methods and be
 - Mirror used: no.
 - LFS usage: no.
 - Required paper adaptation: add a past-task replay buffer to sequential LoRA/O-LoRA training; mix current-task samples with replayed past-task samples according to the cited paper setting. The ACL paper describes LoRAReplay as mixing 2% past-task data; LoRA Replay + MIGU additionally applies the MIGU magnitude-based gradient mask and threshold settings.
+- Implementation path: `methods/replay_lora/source/project_local/baselines/basic_baselines/replay_lora/method.py`.
+- Smoke validation: `python docs/smoke_implemented_methods.py` passed for bounded replay-buffer growth and mixed second-segment training.
 - Notes: see `methods/replay_lora/REPRODUCIBILITY.md`; project-local replay implementation/configs and the ACL ZIP are included as reproducible sources and must not be represented as an external official release for the separate "Combining replay and LoRA" paper.
 
 ### O-LoRA
@@ -82,6 +86,8 @@ This repository is organized for selected LoRA continual learning methods and be
 - Mirror used: no.
 - LFS usage: no.
 - Required paper adaptation: implement LB-CL's SVD-triplet sensitivity scoring, previous-task knowledge extraction/injection into new low-rank parameters, and orthogonal-subspace training on top of the O-LoRA-style baseline.
+- Implementation path: `methods/lb_cl/source/project_local/baselines/advanced_baselines/lb_cl/method.py`.
+- Smoke validation: `python docs/smoke_implemented_methods.py` passed for SVD-triplet extraction, prior-task injection, and projection-hook calls.
 - Notes: see `methods/lb_cl/REPRODUCIBILITY.md`; do not claim strict official LB-CL paper code without later author-source or project-owner equivalence verification.
 
 ### Progressive Prompts
@@ -198,4 +204,6 @@ This repository is organized for selected LoRA continual learning methods and be
 - Mirror used: no.
 - LFS usage: no.
 - Required construction: use the GLUE/SuperGLUE task definitions, construct the stream as `sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa`, and keep the local sampling/formatting policy from `seqglue_cl_tasks_train50_eval10.json`.
+- Implementation path: `benchmark/seq_glue/source/project_local/data/processed/seqglue_cl_tasks_train50_eval10.json` and `benchmark/seq_glue/source/project_local/scripts/`.
+- Smoke validation: `python docs/smoke_implemented_methods.py` passed for 8-segment order and 50/10 split checks.
 - Notes: see `benchmark/seq_glue/REPRODUCIBILITY.md`; published-setting configs for 8 methods are included.

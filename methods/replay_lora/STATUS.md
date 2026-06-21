@@ -23,3 +23,6 @@ Required replay modifications are documented in `REPRODUCIBILITY.md`: add a past
 Do not claim the ACL ZIP or project-local code is official code for the separate "Combining replay and LoRA" paper.
 
 See `REPRODUCIBILITY.md` for closest reproducible code and paper-adaptation rules.
+Implementation status: implemented in `source/project_local/baselines/basic_baselines/replay_lora/method.py` with a bounded replay buffer and current+past example mixing. ACL software source remains vendored for the MIGU/LoRA Replay paper route.
+
+Smoke validation: `python docs/smoke_implemented_methods.py` passed; replay buffer grew across two synthetic segments and mixed replay examples during second-segment training.

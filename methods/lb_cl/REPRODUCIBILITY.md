@@ -13,18 +13,18 @@
 
 ## Source Relationship
 
-No public author-maintained LB-CL experiment repository has been verified in this package. The files under `source/project_local` are project-local scaffold/config material and must not be described as official LB-CL paper code.
+No public author-maintained LB-CL experiment repository has been verified in this package. The files under `source/project_local` are a project-local implementation of the paper mechanism on the local O-LoRA-style training loop and must not be described as official LB-CL author code.
 
 The closest reproducible path is an adaptation from O-LoRA, because the LB-CL paper explicitly compares against O-LoRA and keeps the orthogonal-subspace continual-learning setting while adding a knowledge-transfer stage.
 
-## Required Paper Modifications
+## Implemented Paper Mechanism
 
-To reproduce LB-CL from the closest available code, start from O-LoRA and implement the paper-specific changes:
+The project-local method class now implements the paper-specific changes on top of the closest available O-LoRA-style code:
 
-- Replace plain per-task LoRA initialization with the LB-CL knowledge extraction and injection stage.
-- Decompose previous task low-rank parameters with SVD and compute sensitivity scores for SVD triplets.
-- Use the sensitivity metric to select/inject prior-task parametric knowledge into the new task low-rank parameters.
-- Preserve the O-LoRA-style orthogonal-subspace training constraint for new tasks.
+- Replaces plain per-task LoRA initialization with `LBCLMethod.on_segment_start`, which creates a new adapter and injects cached prior-task knowledge.
+- Decomposes previous task low-rank parameters with SVD in `extract_sensitive_svd_triplets` and computes sensitivity scores for triplet selection.
+- Uses the sensitivity metric in `inject_svd_triplets_into_adapter` to select and inject prior-task parametric knowledge into new low-rank parameters.
+- Preserves the O-LoRA-style orthogonal-subspace training constraint by calling `project_active_adapter_gradients` after backward and before the adapter step.
 - Keep the continual task stream, model, LoRA rank, optimizer, and evaluation protocol aligned with the paper setting being reproduced.
 
-This package records the adaptation recipe and project-local scaffold only; it does not certify equivalence to an unreleased official implementation.
+Smoke validation imported and instantiated the method with a synthetic LoRA wrapper, cached first-task triplets, injected one selected triplet into the second adapter, and called the projection hook. This does not certify bitwise equivalence to an unreleased official implementation.

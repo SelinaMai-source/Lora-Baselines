@@ -7,22 +7,37 @@ from core.data import Example, Segment
 
 class SequentialLoRAMethod:
     """
-    Baseline A: Sequential LoRA
+    Baseline A: Sequential LoRA.
 
-    - Single LoRA branch (no bank, no router)
-    - Train segment by segment, always on the same adapter
+    This is the intentionally plain baseline: one LoRA adapter is trained
+    segment by segment with no replay, no O-LoRA projection, no LB-CL
+    knowledge injection, no MIGU mask, and no router/prompt mechanism.
     """
 
     name = "sequential_lora"
 
     def __init__(self, cfg: Dict[str, Any]):
         self.cfg = cfg
+        self.disabled_mechanisms = {
+            "replay": True,
+            "orthogonal_projection": True,
+            "lbcl_injection": True,
+            "migu_mask": True,
+            "router": True,
+            "prompt_modules": True,
+        }
 
     def on_segment_start(self, *, segment: Segment, model: Any, lora: Any) -> Dict[str, Any]:
-        # Ensure using default adapter for sequential baseline.
+        # Ensure the baseline remains a single default adapter across segments.
+        if hasattr(lora, "set_soft_routing"):
+            lora.set_soft_routing(None, None)
         if "default" in lora.list_adapters():
             lora.set_active_adapter("default")
-        return {"active_adapter": lora.get_active_adapter_name()}
+        return {
+            "active_adapter": lora.get_active_adapter_name(),
+            "adapter_policy": "single_default_adapter_reused_across_segments",
+            "disabled_mechanisms": dict(self.disabled_mechanisms),
+        }
 
     def train_on_segment(
         self,
@@ -65,6 +80,11 @@ class SequentialLoRAMethod:
         metrics["grad_norm"] = sum(grad_norms) / max(1, len(grad_norms))
         metrics["lr"] = sum(lr_values) / max(1, len(lr_values))
         metrics["active_adapter"] = lora.get_active_adapter_name()
+        metrics["adapter_policy"] = "single_default_adapter_reused_across_segments"
+        metrics["replay_examples_used"] = 0
+        metrics["projection_applied_calls"] = 0
+        metrics["lbcl_injected_triplets"] = 0
+        metrics["migu_masked_parameters"] = 0
         return metrics
 
 
