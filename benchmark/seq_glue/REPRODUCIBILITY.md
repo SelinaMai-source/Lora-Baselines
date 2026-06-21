@@ -1,18 +1,25 @@
 # Seq-GLUE Reproducibility Notes
 
-Official external code status: no standalone Seq-GLUE-only official repository was verified.
+## Official Code Status
 
-Official base benchmark: GLUE, https://gluebenchmark.com/.
+- Official code status: project-local benchmark stream; no standalone official Seq-GLUE-only repository verified.
+- Official GLUE source: https://gluebenchmark.com/
+- Closest reproducible source path: `benchmark/seq_glue/source/project_local`.
+- Stream order: `sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa`.
+- Source type: project-local published-setting benchmark construction, not an independent official Seq-GLUE repository.
 
-Closest reproducible source: project-local stream/configs/scripts at `benchmark/seq_glue/source/project_local`.
+## Source Relationship
 
-Stream used in this repo:
+Seq-GLUE here is a continual-learning stream assembled from GLUE/SuperGLUE-style tasks and local published-setting configs. The GLUE benchmark is the official task source, while the exact eight-task stream is a project-local reconstruction aligned with the published setting used by this package and continual-learning papers that adopt this order.
 
-`sst2 -> mrpc -> rte -> cola -> boolq -> wic -> cb -> copa`
+Do not cite this directory as an official Seq-GLUE repository. Cite the original task sources and the paper/project setting that defines the stream order.
 
-Required adaptation:
+## Required Construction Steps
 
-- Construct the continual benchmark stream from GLUE/SuperGLUE-style tasks using the project-local processed stream `seqglue_cl_tasks_train50_eval10.json`.
-- Keep the task order and train/eval split sizes used in the project-local published-setting configs.
-- When reproducing a specific method paper, cross-check whether that paper uses the same GLUE task order before claiming strict comparability.
-- Report this as a project-local Seq-GLUE construction over official GLUE tasks, not as a standalone official Seq-GLUE codebase.
+To reproduce this benchmark stream:
+
+- Use the GLUE/SuperGLUE task definitions for the underlying datasets.
+- Construct the task sequence in this exact order: `sst2`, `mrpc`, `rte`, `cola`, `boolq`, `wic`, `cb`, `copa`.
+- Keep the same train/eval sampling policy as the project-local stream file, currently `seqglue_cl_tasks_train50_eval10.json`.
+- Keep label verbalization, prompt/instruction formatting, and metric mapping consistent across methods.
+- Report that the stream is project-local or paper-setting-derived unless a later independent official Seq-GLUE source is verified.
