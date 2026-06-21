@@ -12,3 +12,4 @@ benchmark:trace	https://github.com/BeyonderXX/TRACE.git	vendor	ok	commit 462e39f
 benchmark:multiwoz	https://codeload.github.com/budzianowski/multiwoz/tar.gz/fe0c8e65cfcd8462bd33c86e35f21addc84ca82b	archive	failed	IncompleteRead during official codeload attempt
 benchmark:multiwoz	https://github.com/budzianowski/multiwoz.git	git-clone	failed	TLS early EOF / invalid index-pack output
 benchmark:multiwoz_evaluation	https://github.com/Tomiinek/MultiWOZ_Evaluation.git	vendor	ok	commit cd3f0ee3a936a2d1c8567f440a0b71b215d7f991
+method:replay_lora_acl_software	https://aclanthology.org/attachments/2024.findings-emnlp.379.software.zip	curl-unzip	ok	downloaded through http://127.0.0.1:7890 and extracted to methods/replay_lora/source/acl_software_unlocking_cl; temporary ZIP removed
