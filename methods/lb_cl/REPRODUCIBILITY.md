@@ -1,14 +1,30 @@
 # LB-CL Reproducibility Notes
 
-Official external code status: no public author code repository was verified.
+## Official Code Status
 
-Paper source: Learn more, but bother less: parameter efficient continual learning.
+- Official code status: no official verified.
+- Paper: "Learn more, but bother less: parameter efficient continual learning".
+- Paper URLs:
+  - https://openreview.net/forum?id=ZxtaNh5UYB
+  - https://proceedings.neurips.cc/paper_files/paper/2024/file/b0bc711f48724237b38823c4d9cee10b-Paper-Conference.pdf
+- Closest reproducible source path: `methods/lb_cl/source/project_local`.
+- Closest external reproducible base: `methods/o_lora/source`.
+- Base code used: O-LoRA official GitHub, commit `07117e1fc4a5f5ad9308a815a42cee8f46502dc8`.
 
-Closest reproducible base: O-LoRA official code at `methods/o_lora/source` plus the project-local LB-CL scaffold/configs at `methods/lb_cl/source/project_local`.
+## Source Relationship
 
-Required adaptation from the paper:
+No public author-maintained LB-CL experiment repository has been verified in this package. The files under `source/project_local` are project-local scaffold/config material and must not be described as official LB-CL paper code.
 
-- Start from the O-LoRA continual LoRA training/evaluation pipeline and keep the same benchmark streams and order-specific scripts where applicable.
-- Replace the plain sequential/O-LoRA adapter update with the LB-CL project-local SVD/projection scaffold in `baselines/advanced_baselines/lb_cl/method.py`.
-- Use the published-setting configs under `methods/lb_cl/source/project_local/configs/paper/published_setting`.
-- Treat this as closest reproducible code, not official LB-CL paper code, until an author repository or project-owner equivalence review confirms it.
+The closest reproducible path is an adaptation from O-LoRA, because the LB-CL paper explicitly compares against O-LoRA and keeps the orthogonal-subspace continual-learning setting while adding a knowledge-transfer stage.
+
+## Required Paper Modifications
+
+To reproduce LB-CL from the closest available code, start from O-LoRA and implement the paper-specific changes:
+
+- Replace plain per-task LoRA initialization with the LB-CL knowledge extraction and injection stage.
+- Decompose previous task low-rank parameters with SVD and compute sensitivity scores for SVD triplets.
+- Use the sensitivity metric to select/inject prior-task parametric knowledge into the new task low-rank parameters.
+- Preserve the O-LoRA-style orthogonal-subspace training constraint for new tasks.
+- Keep the continual task stream, model, LoRA rank, optimizer, and evaluation protocol aligned with the paper setting being reproduced.
+
+This package records the adaptation recipe and project-local scaffold only; it does not certify equivalence to an unreleased official implementation.
