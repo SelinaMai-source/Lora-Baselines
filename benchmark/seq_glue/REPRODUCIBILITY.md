@@ -16,10 +16,14 @@ Do not cite this directory as an official Seq-GLUE repository. Cite the original
 
 ## Required Construction Steps
 
-To reproduce this benchmark stream:
+To reproduce or validate this benchmark stream:
 
 - Use the GLUE/SuperGLUE task definitions for the underlying datasets.
 - Construct the task sequence in this exact order: `sst2`, `mrpc`, `rte`, `cola`, `boolq`, `wic`, `cb`, `copa`.
 - Keep the same train/eval sampling policy as the project-local stream file, currently `seqglue_cl_tasks_train50_eval10.json`.
 - Keep label verbalization, prompt/instruction formatting, and metric mapping consistent across methods.
+- Use `source/project_local/scripts/convert_seqglue_to_stream.py` to convert raw task JSON exports when rebuilding the stream.
+- Use `source/project_local/seq_glue_stream.py` to load and validate the processed stream before training.
 - Report that the stream is project-local or paper-setting-derived unless a later independent official Seq-GLUE source is verified.
+
+Smoke validation loaded the vendored processed stream through `load_seq_glue_stream` and verified 8 ordered tasks, 400 training examples, and 80 evaluation examples.
