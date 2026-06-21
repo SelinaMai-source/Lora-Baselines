@@ -1,9 +1,11 @@
 # InstrDialog
 
-Status: official source identified, but not vendored in this environment.
+Status: official CITB source partially vendored in `source/`.
 
 Official source: https://github.com/hyintell/CITB
 
 Resolved HEAD: `bf50533b5bced4c388691ecc75e26773da96b3fd`
 
-Download attempts failed or stalled under current network/disk constraints, including one `No space left on device` failure. See `docs/source_manifest.md`.
+Vendored from the official local clone at `/root/autodl-tmp/CITB`. The nested `.git` directory and `data/tasks/` are not committed; `data/tasks/` is about 3.1G and should be downloaded from the official repository when running full benchmark experiments.
+
+See `docs/source_manifest.md`.

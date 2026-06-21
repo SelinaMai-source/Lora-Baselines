@@ -111,25 +111,25 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### InstrDialog
 
-- Downloaded: no.
-- Source path: intended `benchmark/instrdialog/source`, but no complete source was extracted.
+- Downloaded: partial official source.
+- Source path: `benchmark/instrdialog/source`.
 - Official URL: https://github.com/hyintell/CITB
-- Commit resolved: `bf50533b5bced4c388691ecc75e26773da96b3fd`.
+- Commit: `bf50533b5bced4c388691ecc75e26773da96b3fd`.
 - Proxy used: yes.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Not downloaded reason: official git clone failed with TLS early EOF; official GitHub codeload archive repeatedly ended with EOF / transfer closed after more than 36 minutes, so no complete archive was copied.
+- Notes: vendored from the official local clone at `/root/autodl-tmp/CITB`. The nested `.git` directory is not committed. Official `data/CIT_data`, `data/splits`, scripts, scores, and source code are included. Official `data/tasks` is not committed because it is about 3.1G; use the official CITB repository to restore it before running full experiments.
 
 ### InstrDialog++
 
-- Downloaded: no.
-- Source path: none.
+- Downloaded: no separate duplicate source tree.
+- Source path: uses `benchmark/instrdialog/source`.
 - Official URL: https://github.com/hyintell/CITB
-- Commit resolved: `bf50533b5bced4c388691ecc75e26773da96b3fd`.
+- Commit: `bf50533b5bced4c388691ecc75e26773da96b3fd` for the shared CITB source.
 - Proxy used: yes.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Not downloaded reason: same CITB download failure as InstrDialog; no duplicate large source tree was created.
+- Notes: InstrDialog++ uses the same official CITB source as InstrDialog. No duplicate source tree is committed to avoid redundant benchmark files.
 
 ### TRACE
 
@@ -143,14 +143,14 @@ This repository is organized for selected LoRA continual learning methods and be
 
 ### MultiWOZ NLG Dataset
 
-- Downloaded: no.
-- Source path: intended `benchmark/multiwoz_nlg/source/multiwoz`, but no complete source was extracted.
+- Downloaded: partial official source.
+- Source path: `benchmark/multiwoz_nlg/source/multiwoz`.
 - Official URL: https://github.com/budzianowski/multiwoz
-- Commit resolved: `fe0c8e65cfcd8462bd33c86e35f21addc84ca82b`.
+- Commit: `fe0c8e65cfcd8462bd33c86e35f21addc84ca82b`.
 - Proxy used: yes.
 - Mirror used: no.
 - Mirror consistency verification: not applicable.
-- Not downloaded reason: official codeload attempt failed with incomplete read; official git clone failed with TLS early EOF. A later codeload attempt was not reached because the preceding CITB codeload command did not complete before manual termination.
+- Notes: vendored from the official local clone at `/root/autodl-tmp/Lora-code/data/raw/multiwoz/multiwoz_repo`. Official code, database files, and available small official zip distributions are included. Unzipped `data/MultiWOZ_2.1/data.json` and `data/MultiWOZ_2.2/data.json` are not committed because they exceed GitHub's 100MB per-file limit; restore them from the official repository or unzip official releases in the experiment environment before full runs.
 
 ### MultiWOZ Evaluation
 
