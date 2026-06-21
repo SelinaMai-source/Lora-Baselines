@@ -1,0 +1,26 @@
+# ready: false
+# blocker: reconcile paper 100/50/100 with vendored CITB long-stream max_eval=25, then generate official stream and metric exporter.
+experiment_name: ccfa_v2_citb_instrdialogpp_order2_seed2_ours
+mode: ours
+seed: 2
+paths:
+  processed_stream_file: TODO_citb_instrdialogpp_official_order2_train100_dev50_test100.json
+  raw_citb_root: ../../benchmark/instrdialog/source
+data:
+  stream_name: instrdialog++
+  official_order: 2
+  train_instances_per_task: 100
+  dev_instances_per_task: 50
+  test_instances_per_task: 100
+  ready: false
+model:
+  backbone_name: google/t5-small-lm-adapt
+  hf_model_name_or_path: TODO_local_t5_small_lm_adapt_superni_init_checkpoint
+output:
+  run_name: ccfa_v2_citb_instrdialogpp_order2_seed2_ours
+  tracking: {use_wandb: true, wandb_project: lora-baselines-run_v1, wandb_group: ccfa_v2_citb_instrdialogpp}
+paper:
+  ready: false
+  official_paper: https://aclanthology.org/2023.findings-emnlp.633/
+  official_repo: https://github.com/hyintell/CITB
+  metrics: [rougeL_AR, rougeL_FWT, rougeL_BWT, Tinit, Tunseen]

@@ -1,0 +1,43 @@
+# ready: false
+# suite: CITB Continual Instruction Tuning
+# benchmark: InstrDialog
+# order: 1
+# blocker: generate official 500/50/100 stream, configure T5-small LM-adapted + 100 SuperNI init, and export CITB AR/FWT/BWT/Tinit/Tunseen.
+experiment_name: ccfa_v2_citb_instrdialog_order1_seed1_ours
+mode: ours
+seed: 1
+paths:
+  project_root: .
+  processed_stream_dir: data/processed
+  processed_stream_file: TODO_citb_instrdialog_official_order1_train500_dev50_test100.json
+  raw_citb_root: ../../benchmark/instrdialog/source
+  assets_dir: assets
+  results_dir: results
+data:
+  stream_format: citb_processed
+  stream_name: instrdialog
+  official_order: 1
+  train_instances_per_task: 500
+  dev_instances_per_task: 50
+  test_instances_per_task: 100
+  ready: false
+model:
+  backbone_name: google/t5-small-lm-adapt
+  hf_model_name_or_path: TODO_local_t5_small_lm_adapt_superni_init_checkpoint
+  max_seq_len: 1024
+  gen_max_new_tokens: 128
+train:
+  epochs_per_segment: TODO_match_citb
+  batch_size: TODO_match_citb_or_gpu_safe_equivalent
+  lr: TODO_match_citb
+output:
+  run_name: ccfa_v2_citb_instrdialog_order1_seed1_ours
+  tracking:
+    use_wandb: true
+    wandb_project: lora-baselines-run_v1
+    wandb_group: ccfa_v2_citb_instrdialog
+paper:
+  ready: false
+  official_paper: https://aclanthology.org/2023.findings-emnlp.633/
+  official_repo: https://github.com/hyintell/CITB
+  metrics: [rougeL_AR, rougeL_FWT, rougeL_BWT, Tinit, Tunseen]

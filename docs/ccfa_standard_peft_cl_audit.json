@@ -1,0 +1,1086 @@
+{
+  "official_paper": "https://aclanthology.org/2023.findings-emnlp.715/",
+  "official_repo": "https://github.com/cmnfriend/O-LoRA",
+  "status": "audit_only_not_ready",
+  "standard_orders": {
+    "order1": {
+      "tasks": [
+        "dbpedia",
+        "amazon",
+        "yahoo",
+        "agnews"
+      ],
+      "script": "methods/o_lora/source/scripts/order_1.sh",
+      "configs": [
+        {
+          "task": "dbpedia",
+          "config_dir": "methods/o_lora/source/configs/order1_configs/dbpedia",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order1_configs/dbpedia/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order1_configs/dbpedia/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order1_configs/dbpedia/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        },
+        {
+          "task": "amazon",
+          "config_dir": "methods/o_lora/source/configs/order1_configs/amazon",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order1_configs/amazon/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order1_configs/amazon/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order1_configs/amazon/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        },
+        {
+          "task": "yahoo",
+          "config_dir": "methods/o_lora/source/configs/order1_configs/yahoo",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order1_configs/yahoo/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order1_configs/yahoo/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order1_configs/yahoo/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        },
+        {
+          "task": "agnews",
+          "config_dir": "methods/o_lora/source/configs/order1_configs/agnews",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order1_configs/agnews/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order1_configs/agnews/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order1_configs/agnews/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        }
+      ]
+    },
+    "order2": {
+      "tasks": [
+        "dbpedia",
+        "amazon",
+        "agnews",
+        "yahoo"
+      ],
+      "script": "methods/o_lora/source/scripts/order_2.sh",
+      "configs": [
+        {
+          "task": "dbpedia",
+          "config_dir": "methods/o_lora/source/configs/order2_configs/dbpedia",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order2_configs/dbpedia/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order2_configs/dbpedia/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order2_configs/dbpedia/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        },
+        {
+          "task": "amazon",
+          "config_dir": "methods/o_lora/source/configs/order2_configs/amazon",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order2_configs/amazon/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order2_configs/amazon/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order2_configs/amazon/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        },
+        {
+          "task": "agnews",
+          "config_dir": "methods/o_lora/source/configs/order2_configs/agnews",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order2_configs/agnews/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order2_configs/agnews/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order2_configs/agnews/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        },
+        {
+          "task": "yahoo",
+          "config_dir": "methods/o_lora/source/configs/order2_configs/yahoo",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order2_configs/yahoo/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order2_configs/yahoo/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order2_configs/yahoo/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        }
+      ]
+    },
+    "order3": {
+      "tasks": [
+        "yahoo",
+        "amazon",
+        "agnews",
+        "dbpedia"
+      ],
+      "script": "methods/o_lora/source/scripts/order_3.sh",
+      "configs": [
+        {
+          "task": "yahoo",
+          "config_dir": "methods/o_lora/source/configs/order3_configs/yahoo",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order3_configs/yahoo/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order3_configs/yahoo/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order3_configs/yahoo/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        },
+        {
+          "task": "amazon",
+          "config_dir": "methods/o_lora/source/configs/order3_configs/amazon",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order3_configs/amazon/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order3_configs/amazon/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order3_configs/amazon/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        },
+        {
+          "task": "agnews",
+          "config_dir": "methods/o_lora/source/configs/order3_configs/agnews",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order3_configs/agnews/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order3_configs/agnews/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order3_configs/agnews/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        },
+        {
+          "task": "dbpedia",
+          "config_dir": "methods/o_lora/source/configs/order3_configs/dbpedia",
+          "exists": true,
+          "train_tasks_json": "methods/o_lora/source/configs/order3_configs/dbpedia/train_tasks.json",
+          "train_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "dev_tasks_json": "methods/o_lora/source/configs/order3_configs/dbpedia/dev_tasks.json",
+          "dev_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ],
+          "test_tasks_json": "methods/o_lora/source/configs/order3_configs/dbpedia/test_tasks.json",
+          "test_keys": [
+            "SC",
+            "TC",
+            "NLI",
+            "QQP",
+            "WiC",
+            "MultiRC",
+            "COPA",
+            "BoolQA"
+          ]
+        }
+      ]
+    }
+  },
+  "long_order": [
+    "yelp",
+    "amazon",
+    "MNLI",
+    "CB",
+    "COPA",
+    "QQP",
+    "RTE",
+    "IMDB",
+    "SST-2",
+    "dbpedia",
+    "agnews",
+    "yahoo",
+    "MultiRC",
+    "BoolQA",
+    "WiC"
+  ],
+  "blocker": "Convert O-LoRA CL_Benchmark/configs into ours stream format and verify LFPT5/Progressive Prompts sample equivalence before launch.",
+  "long_configs": [
+    {
+      "task": "yelp",
+      "config_dir": "methods/o_lora/source/configs/long_configs/yelp",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/yelp/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/yelp/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/yelp/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "amazon",
+      "config_dir": "methods/o_lora/source/configs/long_configs/amazon",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/amazon/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/amazon/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/amazon/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "MNLI",
+      "config_dir": "methods/o_lora/source/configs/long_configs/MNLI",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/MNLI/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/MNLI/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/MNLI/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "CB",
+      "config_dir": "methods/o_lora/source/configs/long_configs/CB",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/CB/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/CB/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/CB/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "COPA",
+      "config_dir": "methods/o_lora/source/configs/long_configs/COPA",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/COPA/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/COPA/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/COPA/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "QQP",
+      "config_dir": "methods/o_lora/source/configs/long_configs/QQP",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/QQP/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/QQP/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/QQP/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "RTE",
+      "config_dir": "methods/o_lora/source/configs/long_configs/RTE",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/RTE/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/RTE/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/RTE/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "IMDB",
+      "config_dir": "methods/o_lora/source/configs/long_configs/IMDB",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/IMDB/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/IMDB/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/IMDB/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "SST-2",
+      "config_dir": "methods/o_lora/source/configs/long_configs/SST-2",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/SST-2/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/SST-2/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/SST-2/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "dbpedia",
+      "config_dir": "methods/o_lora/source/configs/long_configs/dbpedia",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/dbpedia/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/dbpedia/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/dbpedia/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "agnews",
+      "config_dir": "methods/o_lora/source/configs/long_configs/agnews",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/agnews/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/agnews/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/agnews/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "yahoo",
+      "config_dir": "methods/o_lora/source/configs/long_configs/yahoo",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/yahoo/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/yahoo/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/yahoo/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "MultiRC",
+      "config_dir": "methods/o_lora/source/configs/long_configs/MultiRC",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/MultiRC/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/MultiRC/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/MultiRC/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "BoolQA",
+      "config_dir": "methods/o_lora/source/configs/long_configs/BoolQA",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/BoolQA/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/BoolQA/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/BoolQA/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    },
+    {
+      "task": "WiC",
+      "config_dir": "methods/o_lora/source/configs/long_configs/WiC",
+      "exists": true,
+      "train_tasks_json": "methods/o_lora/source/configs/long_configs/WiC/train_tasks.json",
+      "train_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "dev_tasks_json": "methods/o_lora/source/configs/long_configs/WiC/dev_tasks.json",
+      "dev_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ],
+      "test_tasks_json": "methods/o_lora/source/configs/long_configs/WiC/test_tasks.json",
+      "test_keys": [
+        "SC",
+        "TC",
+        "NLI",
+        "QQP",
+        "WiC",
+        "MultiRC",
+        "COPA",
+        "BoolQA"
+      ]
+    }
+  ]
+}

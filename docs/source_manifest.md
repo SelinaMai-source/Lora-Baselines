@@ -2,6 +2,14 @@
 
 This repository is organized for selected LoRA continual learning methods and benchmarks. Root-level ordinary files are intentionally avoided; all documentation and helper scripts live under `docs/`.
 
+## v2 CCF-A Source Scope
+
+The v2 branch prepares exactly three main experiment suites:
+
+- CITB Continual Instruction Tuning from https://aclanthology.org/2023.findings-emnlp.633/ and https://github.com/hyintell/CITB.
+- Standard T5-Large PEFT Continual Learning from O-LoRA, LFPT5, Progressive Prompts, and LB-CL paper/code sources. LB-CL has no verified official code repository.
+- Dialogue NLG / MultiWOZ Continual Learning from ARPER first, ToDCL as extension/backup. ARPER and ToDCL official sources are linked but not vendored in this repository yet.
+
 ## Repository Layout Policy
 
 - Root directories: `methods/`, `benchmark/`, `docs/`.
@@ -129,6 +137,7 @@ This repository is organized for selected LoRA continual learning methods and be
 
 - Downloaded: yes, as project-owner local source snapshot.
 - Source path: `methods/ours/source/project_local`.
+- v2 core code folder: `methods/ours/source/project_local`, documented by `methods/ours/README.md`, `methods/ours/source/project_local/README.md`, and `methods/ours/source/project_local/CORE_CODE_MANIFEST.md`.
 - Official URL: project-owner local source `/root/autodl-tmp/Lora-code`, not an external published official repository.
 - Project-local source commit: `d711d912926c58c13acc02b3c3e4cfddd9f2c969`.
 - Local dirty status: dirty at vendoring time; 143 status entries were present, including modified `core/train.py`, `core/evaluate.py`, `core/metrics_utils.py`, `core/wandb_tracker.py`, modified/new `configs/paper/published_setting/*`, and local generated/state/cache paths that were excluded.
@@ -194,6 +203,25 @@ This repository is organized for selected LoRA continual learning methods and be
 - Proxy used: yes.
 - Mirror used: no.
 - LFS usage: no.
+
+### ARPER / Continual Learning for NLG
+
+- Downloaded: no.
+- Source path: not vendored yet.
+- Official URL: https://github.com/MiFei/Continual-Learning-for-NLG
+- Paper URL: https://aclanthology.org/2020.findings-emnlp.310/
+- Verification status: official paper/repo links recorded for v2; local source/data conversion still TODO.
+- Intended v2 role: primary Dialogue NLG / MultiWOZ CL suite, using MultiWOZ-2.0 domain/dialogue-act intent streams and BLEU-4/SER.
+- Notes: do not claim local `multiwoz_nlg` train50/eval10 diagnostic data as ARPER.
+
+### ToDCL
+
+- Downloaded: no.
+- Source path: not vendored yet.
+- Official URL: https://github.com/andreamad8/ToDCL
+- Paper URL: https://aclanthology.org/2021.emnlp-main.590/
+- Verification status: official paper/repo links recorded for v2; local source/data conversion still TODO.
+- Intended v2 role: extension/backup Dialogue NLG / E2E suite after ARPER alignment, using 37-domain ToD NLG/E2E and BLEU/EER.
 
 ### Seq-GLUE
 

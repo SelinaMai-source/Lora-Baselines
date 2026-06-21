@@ -1,0 +1,22 @@
+# ready: false
+# blocker: ARPER MultiWOZ-2.0 DA-intent/domain stream and official SER scorer are not aligned yet.
+experiment_name: ccfa_v2_arper_multiwoz_nlg_seed3_ours
+mode: ours
+seed: 3
+paths:
+  processed_stream_file: TODO_arper_multiwoz20_nlg_official_seed3.json
+data:
+  stream_name: arper_multiwoz_nlg
+  source_dataset: MultiWOZ-2.0
+  ready: false
+model:
+  backbone_name: TODO_match_or_document_dialogue_nlg_backbone
+  hf_model_name_or_path: TODO
+output:
+  run_name: ccfa_v2_arper_multiwoz_nlg_seed3_ours
+  tracking: {use_wandb: true, wandb_project: lora-baselines-run_v1, wandb_group: ccfa_v2_arper_multiwoz_nlg}
+paper:
+  ready: false
+  official_paper: https://aclanthology.org/2020.findings-emnlp.310/
+  official_repo: https://github.com/MiFei/Continual-Learning-for-NLG
+  metrics: [BLEU_4, SER, forgetting]

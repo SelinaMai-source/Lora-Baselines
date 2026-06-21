@@ -1,0 +1,43 @@
+{
+  "status": "audit_only_not_ready",
+  "priority": "ARPER MultiWOZ NLG first; ToDCL NLG/E2E as extension",
+  "arper": {
+    "paper": "https://aclanthology.org/2020.findings-emnlp.310/",
+    "official_repo": "https://github.com/MiFei/Continual-Learning-for-NLG",
+    "local_source": {
+      "path": "benchmark/arper/source",
+      "exists": false,
+      "is_dir": false
+    },
+    "target": "MultiWOZ-2.0 domain/dialogue-act intent continual NLG, 250/500 exemplar published baselines, BLEU-4/SER",
+    "blocker": "Official ARPER source is not vendored yet; current local MultiWOZ stream is 5-domain train50/eval10 and not paper-aligned."
+  },
+  "todcl": {
+    "paper": "https://aclanthology.org/2021.emnlp-main.590/",
+    "official_repo": "https://github.com/andreamad8/ToDCL",
+    "local_source": {
+      "path": "benchmark/todcl/source",
+      "exists": false,
+      "is_dir": false
+    },
+    "target": "37-domain ToD NLG/E2E, BLEU/EER",
+    "blocker": "Official ToDCL source/data are not vendored yet; keep as backup/extension until ARPER route is aligned."
+  },
+  "local_multiwoz_assets": {
+    "multiwoz_repo": {
+      "path": "benchmark/multiwoz_nlg/source/multiwoz",
+      "exists": true,
+      "is_dir": true
+    },
+    "multiwoz_eval": {
+      "path": "benchmark/multiwoz_nlg/source/evaluation",
+      "exists": true,
+      "is_dir": true
+    },
+    "current_converter": {
+      "path": "methods/ours/source/project_local/scripts/convert_multiwoz_to_stream.py",
+      "exists": true,
+      "is_dir": false
+    }
+  }
+}

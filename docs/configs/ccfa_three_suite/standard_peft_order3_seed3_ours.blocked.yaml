@@ -1,0 +1,22 @@
+# ready: false
+# blocker: convert official O-LoRA order3 CL_Benchmark data and implement T5-large ours runner.
+experiment_name: ccfa_v2_standard_peft_order3_seed3_ours
+mode: ours
+seed: 3
+paths:
+  processed_stream_file: TODO_olora_standard_order3_t5large.json
+data:
+  stream_name: olora_standard_cl
+  official_order: [yahoo, amazon, agnews, dbpedia]
+  ready: false
+model:
+  backbone_name: t5-large
+  hf_model_name_or_path: TODO_local_or_hf_t5_large
+output:
+  run_name: ccfa_v2_standard_peft_order3_seed3_ours
+  tracking: {use_wandb: true, wandb_project: lora-baselines-run_v1, wandb_group: ccfa_v2_standard_peft}
+paper:
+  ready: false
+  official_paper: https://aclanthology.org/2023.findings-emnlp.715/
+  official_repo: https://github.com/cmnfriend/O-LoRA
+  metrics: [final_average_accuracy, forgetting, BWT]

@@ -31,6 +31,51 @@ No large model is fully ready yet. Full downloads are blocked by the current
 free-space shortage. LFPT5 also needs `gsutil` or an equivalent Google Cloud
 Storage downloader for the official `gs://t5-data/...` checkpoint objects.
 
+## v2 CCF-A Required Assets
+
+### CITB
+
+Required:
+
+- `google/t5-small-lm-adapt` as the base LM-adapted T5-small checkpoint.
+- The CITB initial instruction-tuned checkpoint trained from 100 SuperNI tasks.
+- Official CITB task/data files from `benchmark/instrdialog/source`.
+
+Current state:
+
+- Official CITB source/data are vendored.
+- The T5-small LM-adapted and 100-SuperNI-init runtime checkpoint path is not
+  configured for ours yet.
+- Do not use Llama-3.1 diagnostic configs for the main CITB comparison.
+
+### Standard T5-Large PEFT CL
+
+Required:
+
+- T5-large runtime checkpoint compatible with O-LoRA/LFPT5/Progressive-Prompts
+  comparisons.
+- Converted/loaded official O-LoRA `CL_Benchmark` task data and order configs.
+
+Current state:
+
+- O-LoRA source/configs are vendored.
+- The local `seqglue` stream is not the official standard PEFT CL suite.
+- T5-large checkpoint availability and ours runner compatibility must be
+  verified before launch.
+
+### Dialogue NLG / MultiWOZ CL
+
+Required:
+
+- ARPER MultiWOZ-2.0 source/data conversion and official BLEU-4/SER scorer.
+- ToDCL 37-domain data and BLEU/EER scorer only if the extension route is used.
+
+Current state:
+
+- Generic MultiWOZ and MultiWOZ evaluation sources are vendored.
+- ARPER and ToDCL sources are not vendored yet.
+- The current local MultiWOZ train50/eval10 stream is diagnostic only.
+
 ## Continual-T0 / CT0
 
 Official model:
