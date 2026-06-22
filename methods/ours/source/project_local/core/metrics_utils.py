@@ -128,6 +128,22 @@ def sentence_bleu4(pred: str, gold: str) -> float:
     return float(bp * math.exp(s))
 
 
+def corpus_bleu4(predictions: List[str], references: List[str]) -> float:
+    """Corpus BLEU-4 compatible with ARPER's NLTK corpus_bleu path when available."""
+    pairs = [(str(p or ""), str(r or "")) for p, r in zip(predictions, references)]
+    if not pairs:
+        return 0.0
+    try:
+        from nltk.translate.bleu_score import SmoothingFunction, corpus_bleu
+
+        refs = [[[tok for tok in ref.split() if tok]] for _pred, ref in pairs]
+        hyps = [[tok for tok in pred.split() if tok] for pred, _ref in pairs]
+        return float(corpus_bleu(refs, hyps, weights=(0.25, 0.25, 0.25, 0.25), smoothing_function=SmoothingFunction().method1))
+    except Exception:
+        vals = [sentence_bleu4(pred, ref) for pred, ref in pairs]
+        return float(sum(vals) / max(1, len(vals)))
+
+
 def starts_incorrectly(pred: str, gold: str) -> bool:
     p = [t for t in pred.split() if t]
     g = [t for t in gold.split() if t]
@@ -175,6 +191,13 @@ def dialogue_slot_error_rate(act_text: str, prediction: str) -> Optional[float]:
     pred = str(prediction or "").lower()
     missing = sum(1 for value in values if value not in pred)
     return float(missing / max(1, len(values)))
+
+
+def dialogue_slot_error_counts(act_text: str, prediction: str) -> Dict[str, int]:
+    values = parse_dialogue_act_values(act_text)
+    pred = str(prediction or "").lower()
+    missing = sum(1 for value in values if value not in pred)
+    return {"required_slots": int(len(values)), "missing_slots": int(missing)}
 
 
 def _probe_nlg_metric_libs() -> None:

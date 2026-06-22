@@ -1098,6 +1098,12 @@ def build_hf_backbone(model_cfg: Dict[str, Any], *, seed: int) -> BaseBackbone:
     For now, we return the debug model with a clear error message if user truly expects HF.
     """
 
+    task_type = str(model_cfg.get("task_type", model_cfg.get("architecture", "causal_lm"))).strip().lower()
+    if task_type in {"seq2seq", "seq2seq_lm", "seq2seq-lm", "seq_2_seq_lm", "sequence_to_sequence", "t5"}:
+        from core.models.seq2seq_lora_wrapper import build_seq2seq_backbone
+
+        return build_seq2seq_backbone(model_cfg, seed=seed)
+
     hf_path = str(model_cfg.get("hf_model_name_or_path", "")).strip()
     if not hf_path:
         raise ValueError("hf_model_name_or_path is required for baseline/ours HF backbone.")

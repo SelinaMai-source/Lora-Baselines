@@ -1,0 +1,56 @@
+# Ours-only T5 seq2seq adapter for CITB InstrDialog order1.
+# SuperNI-init note: use the local base google/t5-small-lm-adapt snapshot until a
+# verified 100-SuperNI-init checkpoint is produced or provided.
+experiment_name: ccfa_v2_instrdialog_order1_seed1_ours_seq2seq
+mode: ours
+seed: 1
+paths:
+  project_root: /root/Lora-Baselines
+  processed_stream_dir: /root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite/citb
+  processed_stream_file: citb_instrdialog_order1_train500_dev50_test100.json
+  results_dir: /root/autodl-tmp/lora-baselines-run_v1/results
+data:
+  suite: CITB
+  benchmark: InstrDialog-order1
+  stream_format: unified_ccfa_stream
+  ready: smoke_ready
+model:
+  architecture: seq2seq_lm
+  task_type: seq2seq_lm
+  backbone: google/t5-small-lm-adapt
+  hf_model_name_or_path: /root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt
+  superni_init_checkpoint: TODO_run_CITB_stage1_100_SuperNI_or_set_verified_checkpoint_path
+  torch_dtype: bfloat16
+  device: auto
+  max_source_len: 1024
+  max_target_len: 256
+  gen_max_new_tokens: 128
+  gen_num_beams: 1
+  gen_do_sample: false
+lora:
+  enabled: true
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q", "v"]
+train:
+  lr: 0.0001
+  epochs_per_segment: 1
+  batch_size: 1
+  hard_early_stop_enabled: false
+modules:
+  use_drift_detector: true
+  use_lora_bank: true
+  use_router: true
+  use_overlap_loss: true
+eval_normalization:
+  enable_task_aware_score: true
+  auto_short_answer_max_new_tokens: false
+output:
+  run_name: ccfa_v2_instrdialog_order1_seed1_ours_seq2seq
+  tracking:
+    use_wandb: false
+paper:
+  ready: smoke_ready
+  metrics: ["ROUGE-L AR", "FWT", "BWT", "Tinit", "Tunseen"]
+  postprocess: ccfa_postprocess/summary.json

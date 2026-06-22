@@ -110,6 +110,7 @@ class LoRAWrapper:
         """
         self.backbone = backbone
         self.cfg = cfg
+        self._peft_task_type = self._resolve_peft_task_type(backbone)
         self._active_adapter_name: str = "default"
         self._adapter_steps: Dict[str, int] = {"default": 0}
         self._frozen_adapters: Set[str] = set()
@@ -132,7 +133,7 @@ class LoRAWrapper:
             lora_dropout=float(self.cfg.dropout),
             bias="none",
             target_modules=peft_modules,
-            task_type=TaskType.CAUSAL_LM,
+            task_type=self._peft_task_type,
         )
 
         # Create default adapter and attach PEFT model to backbone.
@@ -207,7 +208,7 @@ class LoRAWrapper:
             lora_dropout=float(self.cfg.dropout),
             bias="none",
             target_modules=peft_modules_add,
-            task_type=TaskType.CAUSAL_LM,
+            task_type=self._peft_task_type,
         )
         self.peft_model.add_adapter(adapter_name=name, peft_config=peft_cfg)
         self._adapter_steps[name] = 0
@@ -467,6 +468,7 @@ class LoRAWrapper:
         tm_out: Any = tm if isinstance(tm, str) else (tm or [])
         return {
             "enabled": self.cfg.enabled,
+            "peft_task_type": str(self._peft_task_type),
             "r": self.cfg.r,
             "alpha": self.cfg.alpha,
             "dropout": self.cfg.dropout,
@@ -492,6 +494,13 @@ class LoRAWrapper:
 
         # AdamW is a common default; training hyperparameters are controlled via `lr` passed to fit_batch.
         self._optimizer = torch.optim.AdamW(lora_params, lr=1e-4)
+
+    @staticmethod
+    def _resolve_peft_task_type(backbone: Any) -> TaskType:
+        raw = str(getattr(backbone, "peft_task_type", "CAUSAL_LM")).strip().upper()
+        if raw in {"SEQ_2_SEQ_LM", "SEQ2SEQ_LM", "SEQ2SEQ"}:
+            return TaskType.SEQ_2_SEQ_LM
+        return TaskType.CAUSAL_LM
 
 
 class DebugLoRAWrapper:

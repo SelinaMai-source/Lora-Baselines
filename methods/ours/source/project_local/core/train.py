@@ -16,6 +16,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from core.data import ContinualStream, Segment, load_continual_stream
 from core.evaluate import evaluate_stream
+from core.ccfa_metrics import matrix_columns_from_eval, write_ccfa_postprocess_outputs
 from core.methods.drift_detector import AnchorSet, DriftDetector, DriftEvent, build_anchor_set
 from core.methods.lora_bank import LoRABank
 from core.methods.overlap_loss import compute_anti_overlap_training_loss, compute_overlap_loss
@@ -54,6 +55,7 @@ def _summarize_lora_info(lora: Any) -> Dict[str, Any]:
         trainable_names = []
     return {
         "enabled": bool(info.get("enabled", False)),
+        "peft_task_type": info.get("peft_task_type"),
         "r": info.get("r"),
         "alpha": info.get("alpha"),
         "dropout": info.get("dropout"),
@@ -203,6 +205,14 @@ def main() -> None:
                 segment_metrics_rows=segment_metrics_rows,
                 tracker=tracker,
             )
+
+        ccfa_outputs = write_ccfa_postprocess_outputs(
+            run_dir=run_paths.run_dir,
+            cfg=cfg,
+            stream=stream,
+            segment_metrics_rows=segment_metrics_rows,
+        )
+        final_metrics.update(ccfa_outputs)
 
         # Save final metrics + per-segment table
         save_json(run_paths.metrics_json, final_metrics)
@@ -427,6 +437,9 @@ def _routing_row_metrics(eval_metrics: Dict[str, Any]) -> Dict[str, Any]:
         "eval.anytime_task_aware_score": float(
             extra.get("anytime_task_aware_score", eval_metrics.get("seen_avg_task_aware_score", 0.0))
         ),
+        "eval.corpus_bleu4": float(extra.get("corpus_bleu4", eval_metrics.get("bleu_mean", 0.0))),
+        "eval.slot_missing_count": int(extra.get("slot_missing_count", 0)),
+        "eval.slot_required_count": int(extra.get("slot_required_count", 0)),
         "eval.task_aware_score_mean": float(extra.get("task_aware_score_mean", 0.0)),
         "routing.num_routed": int(routing.get("num_routed", 0)),
         "routing.oracle_agreement_rate": float(routing.get("oracle_agreement_rate", 0.0)),
@@ -597,6 +610,7 @@ def run_baseline(
             **_flatten_metrics("train", train_metrics),
             **_flatten_metrics("eval", eval_metrics),
             **_routing_row_metrics(eval_metrics),
+            **matrix_columns_from_eval(eval_metrics),
             **{f"hook.{k}": v for k, v in (hook_info or {}).items()},
             "active_adapter": lora.get_active_adapter_name(),
         }
@@ -904,6 +918,7 @@ def run_ours(
             **_flatten_metrics("train", train_metrics),
             **_flatten_metrics("eval", eval_metrics),
             **_routing_row_metrics(eval_metrics),
+            **matrix_columns_from_eval(eval_metrics),
             "active_adapter": lora.get_active_adapter_name(),
             "overlap_loss_proxy": float(overlap_value),
             "overlap_mean_cosine": float(overlap_mean_cosine),

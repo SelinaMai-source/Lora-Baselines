@@ -3,6 +3,10 @@ from __future__ import annotations
 from typing import Any, Dict, List
 
 
+def _supports_chat_template(tokenizer: Any) -> bool:
+    return bool(getattr(tokenizer, "chat_template", None)) and hasattr(tokenizer, "apply_chat_template")
+
+
 def build_user_content(instruction: str, input_text: str) -> str:
     ins = str(instruction or "").strip()
     inp = str(input_text or "").strip()
@@ -31,6 +35,9 @@ def format_for_infer(
     add_generation_prompt: bool = True,
 ) -> str:
     messages = build_chat_messages(instruction, input_text, target=None)
+    if not _supports_chat_template(tokenizer):
+        _ = add_generation_prompt
+        return build_user_content(instruction, input_text)
     return tokenizer.apply_chat_template(
         messages,
         tokenize=False,
@@ -40,6 +47,8 @@ def format_for_infer(
 
 def format_for_train(tokenizer: Any, instruction: str, input_text: str, target: str) -> Dict[str, str]:
     prompt_text = format_for_infer(tokenizer, instruction, input_text)
+    if not _supports_chat_template(tokenizer):
+        return {"prompt_text": prompt_text, "full_text": f"{prompt_text}\n\nTarget:\n{target}"}
     full_text = tokenizer.apply_chat_template(
         build_chat_messages(instruction, input_text, target=str(target)),
         tokenize=False,

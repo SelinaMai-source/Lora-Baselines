@@ -1,6 +1,6 @@
 # CCF-A Three-Suite Alignment Status
 
-Updated: 2026-06-22 07:10 UTC+8
+Updated: 2026-06-22 15:30 UTC+8
 
 This file records the current machine-local preparation state for the v2
 CCF-A three-suite experiments. Large repositories, data, model snapshots, logs,
@@ -68,10 +68,9 @@ being represented as official.
 
 ## Suite A: CITB
 
-Status: `caveat_ready` resources are prepared for three InstrDialog ours-only
-runs; strict paper alignment remains `blocked`. Two Llama caveat queue attempts
-were started and both received `Terminated` before completing the first run, so
-they are recorded as interrupted rather than completed results.
+Status: `smoke_ready` for ours-only T5 seq2seq code. Strict paper alignment
+still needs a verified 100-SuperNI-init checkpoint and optional pre-training /
+unseen-task probes for `Tinit`, `Tunseen`, and `FWT`.
 
 Prepared:
 
@@ -108,21 +107,32 @@ Started:
   training the first segment. Local partial artifacts remain under
   `/root/autodl-tmp/lora-baselines-run_v1/results/ccfa_three_suite/runs/`.
 
+Implemented:
+
+- Ours now supports `AutoModelForSeq2SeqLM` with PEFT `TaskType.SEQ_2_SEQ_LM`
+  through `model.architecture: seq2seq_lm`.
+- The local base checkpoint
+  `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt` is
+  usable from the new CITB template
+  `docs/configs/ccfa_three_suite/citb_instrdialog_order1_seed1_ours_seq2seq.yaml`.
+- Runs export `ccfa_postprocess/summary.json`,
+  `ccfa_postprocess/score_matrix.json`, and
+  `ccfa_postprocess/per_task_time_metrics.csv` with per-task per-time metrics.
+
 Strict blockers:
 
-- The current ours runner builds `AutoModelForCausalLM` and PEFT
-  `TaskType.CAUSAL_LM`; it does not yet implement a T5 seq2seq PEFT path.
 - CITB README/scripts specify `google/t5-small-lm-adapt` for Stage 1, but do
   not provide a ready-made 100-SuperNI-init checkpoint. The base checkpoint is
   local; the paper-strict SuperNI-init checkpoint still requires running CITB
   Stage 1 or finding a verifiable author-provided artifact.
-- Paper-strict CITB result reporting still needs export of the same score
-  matrix fields expected by `collect_results.py`.
+- Ours now exports score matrices, but paper-strict reporting still needs a
+  final check against CITB `collect_results.py` field names plus pre-training /
+  unseen-task probes.
 
 ## Suite B: Standard T5-Large PEFT CL
 
-Status: `blocked` for strict ours runs; official resources and streams are
-prepared.
+Status: `smoke_ready` for ours-only T5-large seq2seq PEFT code; official
+resources and streams are prepared.
 
 Prepared:
 
@@ -147,9 +157,17 @@ Prepared:
   completed via `hf-mirror.com` direct URL with repeated `curl -C -` resumes.
   Transformers validation succeeded for `AutoConfig` and `AutoTokenizer`.
 
-Blockers:
+Implemented:
 
-- Current ours does not have a T5-large seq2seq PEFT runner.
+- The same seq2seq PEFT runner supports local
+  `/root/autodl-tmp/model_cache/hf_snapshots/t5-large`.
+- A ready-ish launch template is available at
+  `docs/configs/ccfa_three_suite/standard_peft_cl_o_lora_standard_order1_seed1_ours_seq2seq.yaml`.
+- Postprocess exports include final average accuracy, per-task accuracy matrix,
+  forgetting, and BWT fields.
+
+Remaining blockers:
+
 - `t5-large` weights are complete and readable locally.
 - LFPT5 sample-equivalence with the O-LoRA four-task standard benchmark still
   needs final paper/code reconciliation; LFPT5 is lifelong few-shot prompt
@@ -158,8 +176,8 @@ Blockers:
 
 ## Suite C: Dialogue NLG
 
-Status: `blocked` for ours runs; official/backup resources and streams are
-prepared.
+Status: `smoke_ready` for ours-only seq2seq generation and ARPER WOZ3 stream
+evaluation; official/backup resources and streams are prepared.
 
 Prepared:
 
@@ -177,11 +195,17 @@ Prepared:
   documents the 37-domain benchmark, GPT-2 backbone, BLEU/EER scorer, and
   official data download script.
 
-Blockers:
+Implemented:
 
-- Current ours causal-LM instruction runner is not aligned to ARPER's SCLSTM
-  dialogue NLG setup.
-- ARPER SER/EER integration over ours generated outputs is not implemented.
+- A seq2seq launch template is available at
+  `docs/configs/ccfa_three_suite/dialogue_nlg_arper_multiwoz_nlg_dialogue_act_seed1_ours_seq2seq.yaml`.
+- Evaluation exports corpus BLEU-4 and an auditable slot-missing SER count/rate
+  over dialogue-act values in the unified stream input.
+
+Remaining blockers:
+
+- The ours T5 path is an ours-only generation baseline, not ARPER's SCLSTM
+  architecture.
 - If switching to ToDCL as the runnable backup, its four upstream datasets
   (`SGD`, `Taskmaster`, `MultiWOZ`) still need full local download and
   preprocessing through the official `data/download.sh`/`utils/preprocess.py`

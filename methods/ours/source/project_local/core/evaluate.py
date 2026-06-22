@@ -11,6 +11,8 @@ from core.data import Example, Segment
 from core.formatting import format_for_infer, format_for_train
 from core.train_labels import build_supervised_labels
 from core.metrics_utils import (
+    corpus_bleu4 as _corpus_bleu4,
+    dialogue_slot_error_counts as _dialogue_slot_error_counts,
     dialogue_slot_error_rate as _dialogue_slot_error_rate,
     lcs_length as _lcs_length,
     lcs_overlap as _lcs_overlap,
@@ -306,6 +308,10 @@ def evaluate_stream(
     oracle_num = int(routing_stats.get("oracle_num_examples", 0))
 
     extra = {
+        "corpus_bleu4": _corpus_bleu4(
+            [str(x.get("normalized_prediction", "")) for x in all_examples_for_dump],
+            [str(x.get("normalized_gold", "")) for x in all_examples_for_dump],
+        ),
         "per_segment_accuracy": [{"segment_id": sid, "accuracy": acc} for sid, acc in per_seg_acc],
         "per_segment_task_aware_accuracy": [
             {"segment_id": sid, "task_aware_accuracy": acc} for sid, acc in per_seg_task_aware_acc
@@ -328,6 +334,8 @@ def evaluate_stream(
         "bleu_mean": float(sum(all_bleu) / max(1, len(all_bleu))),
         "slot_error_rate": float(sum(all_slot_error) / max(1, len(all_slot_error))),
         "slot_error_count": int(len(all_slot_error)),
+        "slot_missing_count": int(sum(int(x.get("slot_missing_count", 0)) for x in all_examples_for_dump)),
+        "slot_required_count": int(sum(int(x.get("slot_required_count", 0)) for x in all_examples_for_dump)),
         "task_aware_score_mean": float(sum(all_task_aware_scores) / max(1, len(all_task_aware_scores))),
         "task_score_type_counts": task_score_type_counts,
         "prefix_1_match_mean": float(sum(all_prefix1) / max(1, len(all_prefix1))),
@@ -580,6 +588,7 @@ def _eval_segment(
         rouge_l = _rouge_l_fscore(norm_pred, norm_gold)
         bleu = _sentence_bleu4(norm_pred, norm_gold)
         slot_error = _dialogue_slot_error_rate(ex.input, norm_pred)
+        slot_counts = _dialogue_slot_error_counts(ex.input, norm_pred)
         task_score = _score_task_aware(
             pred=pred,
             gold=y,
@@ -691,6 +700,8 @@ def _eval_segment(
                 "rouge_l": float(rouge_l),
                 "bleu": float(bleu),
                 "slot_error_rate": None if slot_error is None else float(slot_error),
+                "slot_required_count": int(slot_counts.get("required_slots", 0)),
+                "slot_missing_count": int(slot_counts.get("missing_slots", 0)),
                 "bad_prefix_mismatch": bool(bad_prefix),
                 "prefix_1_match": bool(prefix_1_match),
                 "prefix_3_match": bool(prefix_3_match),

@@ -27,6 +27,10 @@ is kept in the existing curated source snapshot at
 - `../source/project_local/core/models/base_model.py`: backbone construction.
 - `../source/project_local/core/models/lora_wrapper.py`: adapter wrapper and
   LoRA vector utilities.
+- `../source/project_local/core/models/seq2seq_lora_wrapper.py`: T5-style
+  `AutoModelForSeq2SeqLM` backbone for seq2seq PEFT runs.
+- `../source/project_local/core/ccfa_metrics.py`: CCF-A score matrix and
+  postprocess JSON/CSV exports.
 - `../source/project_local/core/metrics_utils.py`: ROUGE/BLEU/dialogue metric
   helpers.
 - `../source/project_local/core/wandb_tracker.py`: optional W&B wrapper. It does
@@ -43,16 +47,21 @@ branches.
 
 ## Three-Suite Integration
 
-- CITB: blocked until official InstrDialog/InstrDialog++ streams,
-  T5-small LM-adapted plus 100-SuperNI-init loading, and ROUGE-L matrix metrics
-  are aligned.
-- Standard T5-Large PEFT CL: blocked until O-LoRA/LFPT5/Progressive-Prompts task
-  orders and sample settings are converted and verified.
-- Dialogue NLG / MultiWOZ CL: blocked until ARPER MultiWOZ-2.0 streams and
-  BLEU-4/SER scoring are aligned; ToDCL remains an extension/backup route.
+- CITB: ours-only code path is `smoke_ready` for T5 seq2seq PEFT using local
+  `google__t5-small-lm-adapt`. The config keeps a clear TODO for a verified
+  100-SuperNI-init checkpoint. Matrix exports include per-task per-time scores
+  and CITB postprocess fields (`AR`, `FWT`, `BWT`, `Tinit`, `Tunseen`), with
+  pre-training/unseen probes null until those passes are added.
+- Standard T5-Large PEFT CL: ours-only code path is `smoke_ready` for
+  `AutoModelForSeq2SeqLM` + PEFT `SEQ_2_SEQ_LM`, with local `t5-large` config
+  templates and final average/per-task matrix/forgetting/BWT exports.
+- Dialogue NLG / MultiWOZ CL: ours-only code path is `smoke_ready` for ARPER
+  WOZ3 streams with seq2seq generation, corpus BLEU-4, and an auditable
+  slot-missing SER scorer over dialogue-act values.
 
-The blocked launch manifest is `docs/ccfa_three_suite_manifest.csv`; configs are
-under `docs/configs/ccfa_three_suite/`.
+The original blocked launch manifest is `docs/ccfa_three_suite_manifest.csv`.
+New ours-only seq2seq templates are under `docs/configs/ccfa_three_suite/` with
+the suffix `_ours_seq2seq.yaml`.
 
 ## Dependencies And Excluded Assets
 
