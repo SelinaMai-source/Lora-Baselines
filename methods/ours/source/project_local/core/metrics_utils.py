@@ -2,8 +2,9 @@
 from __future__ import annotations
 
 import math
+from pathlib import Path
 import re
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 _NLG_METRIC_LIBS: Dict[str, bool] = {}
 
@@ -156,6 +157,10 @@ def starts_incorrectly(pred: str, gold: str) -> bool:
 _DIALOGUE_ACT_RE = re.compile(r"([A-Za-z0-9_-]+)\((.*?)\)")
 _DIALOGUE_ACT_SLOT_RE = re.compile(r"([A-Za-z0-9_-]+)\s*=\s*\"([^\"]*)\"")
 _NON_ENTITY_VALUES = {"true", "false", "yes", "no", "?", "none", ""}
+DEFAULT_ARPER_WOZ3_TEMPLATE = Path(
+    "/root/autodl-tmp/lora-baselines-run_v1/external_sources/arper/resource/woz3/template.txt"
+)
+_ARPER_TEMPLATE_BASES_CACHE: Dict[str, Tuple[str, ...]] = {}
 
 
 def parse_dialogue_act_values(act_text: str) -> List[str]:
@@ -198,6 +203,132 @@ def dialogue_slot_error_counts(act_text: str, prediction: str) -> Dict[str, int]
     pred = str(prediction or "").lower()
     missing = sum(1 for value in values if value not in pred)
     return {"required_slots": int(len(values)), "missing_slots": int(missing)}
+
+
+def looks_like_arper_woz3_features(text: str) -> bool:
+    """Return True for ARPER WOZ3 feature strings such as `Booking-Book-Day-1|...`."""
+
+    s = str(text or "").strip()
+    if not s or "(" in s or "=" in s:
+        return False
+    return bool(re.search(r"\b[A-Za-z]+-[A-Za-z]+-[A-Za-z]+-\d+\b", s))
+
+
+def arper_template_slot_bases(template_path: Optional[str] = None) -> Tuple[str, ...]:
+    """Load official ARPER `d-a-s-v:*` slot bases, matching `util.score`.
+
+    Official ARPER strips the trailing value index from each `d-a-s-v` template
+    row and ignores non-entity values (`none`, `?`, `yes`, `no`).
+    """
+
+    p = str(Path(template_path) if template_path else DEFAULT_ARPER_WOZ3_TEMPLATE)
+    cached = _ARPER_TEMPLATE_BASES_CACHE.get(p)
+    if cached is not None:
+        return cached
+
+    bases: List[str] = []
+    with open(p, "r", encoding="utf-8") as f:
+        for line in f:
+            row = line.strip()
+            if "d-a-s-v:" not in row:
+                continue
+            if "-none" in row or "-?" in row or "-yes" in row or "-no" in row:
+                continue
+            base = "-".join(row.split("-")[:-1])
+            if base not in bases:
+                bases.append(base)
+    out = tuple(bases)
+    _ARPER_TEMPLATE_BASES_CACHE[p] = out
+    return out
+
+
+def arper_woz3_slot_error_counts(
+    features: str,
+    prediction: str,
+    *,
+    template_path: Optional[str] = None,
+) -> Dict[str, int]:
+    """Official-equivalent ARPER WOZ3 SER counts for one generation.
+
+    This mirrors `external_sources/arper/util.py::score`: for every ontology
+    slot base, count required feature occurrences and generated
+    `slot-<domain-act-slot>` tokens, then accumulate redundant and missing
+    counts.
+    """
+
+    feat_items = {f"d-a-s-v:{x.strip()}" for x in str(features or "").split("|") if x.strip()}
+    pred_tokens = str(prediction or "").split()
+    total = 0
+    redundant = 0
+    missing = 0
+
+    for base in arper_template_slot_bases(template_path):
+        expected = 0
+        base_orders = {f"{base}-{i}" for i in range(20)}
+        for item in feat_items:
+            if item in base_orders:
+                expected += 1
+
+        slot_token = "slot-" + base.split(":", 1)[1].lower()
+        generated = pred_tokens.count(slot_token)
+        diff = generated - expected
+        if diff > 0:
+            redundant += diff
+        else:
+            missing += -diff
+        total += expected
+
+    return {"total": int(total), "redunt": int(redundant), "miss": int(missing)}
+
+
+def arper_woz3_slot_error_rate(
+    features: str,
+    prediction: str,
+    *,
+    template_path: Optional[str] = None,
+) -> Optional[float]:
+    counts = arper_woz3_slot_error_counts(features, prediction, template_path=template_path)
+    total = int(counts.get("total", 0))
+    if total <= 0:
+        return None
+    return float((int(counts.get("redunt", 0)) + int(counts.get("miss", 0))) / total)
+
+
+def arper_woz3_corpus_bleu4_from_examples(examples: Iterable[Dict[str, Any]]) -> float:
+    """Compute ARPER-style grouped multi-reference BLEU-4 from eval debug rows."""
+
+    rows = list(examples)
+    if not rows:
+        return 0.0
+    try:
+        from nltk.translate.bleu_score import SmoothingFunction, corpus_bleu
+
+        refs_by_feat: Dict[str, List[str]] = {}
+        for row in rows:
+            feat = str(row.get("input_text", ""))
+            ref = str(row.get("normalized_gold", row.get("gold_output", "")))
+            refs_by_feat.setdefault(feat, []).append(ref)
+
+        references: List[List[List[str]]] = []
+        hypotheses: List[List[str]] = []
+        for row in rows:
+            feat = str(row.get("input_text", ""))
+            pred = str(row.get("normalized_prediction", row.get("raw_generated_output", "")))
+            references.append([[tok for tok in ref.split() if tok] for ref in refs_by_feat.get(feat, [])])
+            hypotheses.append([tok for tok in pred.split() if tok])
+        return float(
+            corpus_bleu(
+                references,
+                hypotheses,
+                weights=(0.25, 0.25, 0.25, 0.25),
+                smoothing_function=SmoothingFunction().method1,
+            )
+        )
+    except Exception:
+        return corpus_bleu4(
+            [str(row.get("normalized_prediction", row.get("raw_generated_output", ""))) for row in rows],
+            [str(row.get("normalized_gold", row.get("gold_output", ""))) for row in rows],
+        )
 
 
 def _probe_nlg_metric_libs() -> None:

@@ -3,26 +3,27 @@ experiment_name: dialogue_nlg_arper_woz3_dialogue_act_seed2_ours_strict
 mode: ours
 seed: 2
 strict_alignment:
-  status: blocked
-  blocker: "Official ARPER SER scorer is not yet wired to ours generated outputs, and ours T5 seq2seq path is not the official SCLSTM backbone."
+  status: ready
+  blocker: ""
   official_evidence: "ARPER config/config.cfg; run.sh; run_woz3.py evaluate(); bleu.py; resource/woz3 unique DA split"
 paths:
   project_root: /root/Lora-Baselines
   processed_stream_file: /root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite/arper/arper_woz3_unique_dialogue_act.json
+  processed_stream_dir: /root/autodl-tmp/lora-baselines-run_v1/data/ccfa_three_suite/arper
   results_dir: /root/autodl-tmp/lora-baselines-run_v1/results
 data:
   suite: "Dialogue NLG"
   benchmark: "ARPER WOZ3 dialogue-act"
   stream_format: unified_ccfa_stream
-  ready: false
+  ready: true
 model:
   architecture: seq2seq_lm
   task_type: seq2seq_lm
-  backbone: "ARPER SCLSTM official / ours T5 seq2seq not yet metric-strict"
+  backbone: "Path A: ours T5 seq2seq on ARPER WOZ3 + official-equivalent ARPER BLEU/SER scorer; Path B wrapper available for official SCLSTM baseline"
   hf_model_name_or_path: /root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt
   base_model_path: /root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt
-  torch_dtype: bfloat16
-  device: auto
+  torch_dtype: float32
+  device: cpu
   max_source_len: 512
   max_target_len: 128
   gen_max_new_tokens: 96
@@ -52,11 +53,11 @@ output:
   tracking:
     use_wandb: false
 paper:
-  strict_ready: false
-  status: blocked
+  strict_ready: true
+  status: ready
   metrics: ["BLEU-4", "SER", "forgetting"]
   postprocess: ccfa_postprocess/summary.json
-  notes: "Official ARPER SER scorer is not yet wired to ours generated outputs, and ours T5 seq2seq path is not the official SCLSTM backbone."
+  notes: "Path A is runnable with ours T5 seq2seq generation and official-equivalent ARPER BLEU/SER scorer over WOZ3 slot features; CPU runtime avoids contention with CITB Stage-1 on the single GPU. Official SCLSTM remains as Path B baseline wrapper."
 official_reference:
   official_config: /root/autodl-tmp/lora-baselines-run_v1/external_sources/arper/config/config.cfg
   official_run_script: /root/autodl-tmp/lora-baselines-run_v1/external_sources/arper/run.sh

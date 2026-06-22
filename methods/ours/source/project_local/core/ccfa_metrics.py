@@ -100,16 +100,43 @@ def write_ccfa_postprocess_outputs(
         },
         "dialogue_nlg": {
             "bleu4": _optional_float(
-                segment_metrics_rows[-1].get("eval.corpus_bleu4") if segment_metrics_rows else None
+                (
+                    segment_metrics_rows[-1].get("eval.arper_woz3_corpus_bleu4")
+                    if segment_metrics_rows[-1].get("eval.arper_woz3_corpus_bleu4") is not None
+                    else segment_metrics_rows[-1].get("eval.corpus_bleu4")
+                )
+                if segment_metrics_rows
+                else None
             ),
             "ser": _optional_float(
-                segment_metrics_rows[-1].get("eval.slot_error_rate") if segment_metrics_rows else None
+                (
+                    segment_metrics_rows[-1].get("eval.arper_woz3_ser_percent")
+                    if segment_metrics_rows[-1].get("eval.arper_woz3_ser_percent") is not None
+                    else segment_metrics_rows[-1].get("eval.slot_error_rate")
+                )
+                if segment_metrics_rows
+                else None
             ),
             "missing_slots": _optional_float(
-                segment_metrics_rows[-1].get("eval.slot_missing_count") if segment_metrics_rows else None
+                (
+                    segment_metrics_rows[-1].get("eval.arper_woz3_miss")
+                    if segment_metrics_rows[-1].get("eval.arper_woz3_miss") is not None
+                    else segment_metrics_rows[-1].get("eval.slot_missing_count")
+                )
+                if segment_metrics_rows
+                else None
             ),
             "required_slots": _optional_float(
-                segment_metrics_rows[-1].get("eval.slot_required_count") if segment_metrics_rows else None
+                (
+                    segment_metrics_rows[-1].get("eval.arper_woz3_total")
+                    if segment_metrics_rows[-1].get("eval.arper_woz3_total") is not None
+                    else segment_metrics_rows[-1].get("eval.slot_required_count")
+                )
+                if segment_metrics_rows
+                else None
+            ),
+            "redundant_slots": _optional_float(
+                segment_metrics_rows[-1].get("eval.arper_woz3_redunt") if segment_metrics_rows else None
             ),
         },
     }

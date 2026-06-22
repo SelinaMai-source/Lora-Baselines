@@ -1,6 +1,6 @@
 # CCF-A Three-Suite Alignment Status
 
-Updated: 2026-06-22 15:30 UTC+8
+Updated: 2026-06-22 20:15 UTC+8
 
 This file records the current machine-local preparation state for the v2
 CCF-A three-suite experiments. Large repositories, data, model snapshots, logs,
@@ -16,8 +16,8 @@ Updated later on 2026-06-22 for the strict paper/official-repo pass.
   `docs/configs/ccfa_three_suite/`, with runtime copies under
   `/root/autodl-tmp/lora-baselines-run_v1/configs/ccfa_three_suite/`.
 - The manifest `docs/ccfa_three_suite_manifest.csv` now uses strict statuses:
-  CITB InstrDialog is `needs-stage1`, CITB InstrDialog++ is `blocked`,
-  Standard PEFT CL is `ready`, and Dialogue NLG / ARPER is `blocked`.
+  CITB InstrDialog is `running-stage1`, CITB InstrDialog++ is `blocked-by-long-split`,
+  Standard PEFT CL remains strict-ready/start-attempted, and Dialogue NLG / ARPER is metric-ready/start-attempted.
 - Older `caveat_ready` and `blocked` configs remain as historical artifacts and
   must not be used as final strict launch configs.
 
@@ -83,9 +83,7 @@ being represented as official.
 
 ## Suite A: CITB
 
-Status: `smoke_ready` for ours-only T5 seq2seq code. Strict paper alignment
-still needs a verified 100-SuperNI-init checkpoint and optional pre-training /
-unseen-task probes for `Tinit`, `Tunseen`, and `FWT`.
+Status: `running-stage1`. The official CITB Stage-1 initial multitask tuning job is running in tmux `ccfa_citb_stage1_superni` to produce the 100-SuperNI-init checkpoint; downstream Tinit/Tunseen/FWT probes remain after that checkpoint exists.
 
 Prepared:
 
@@ -111,9 +109,9 @@ Prepared:
 
 Started:
 
-- tmux session: `ccfa_citb_caveat_ours`.
-- Queue: three InstrDialog runs, orders/seeds 1, 2, 3.
-- W&B project: `lora- baselines-run_v1`.
+- tmux session: `ccfa_citb_stage1_superni` for official Stage-1 checkpoint generation.
+- Wrapper: `docs/scripts/run_citb_stage1_superni_official_wrapper.sh`; log `/root/autodl-tmp/lora-baselines-run_v1/logs/citb_stage1_superni_seed469.log`.
+- Expected checkpoint dir: `/root/autodl-tmp/model_cache/citb_superni_stage1/base_epoch15_lr1e-05_seed469`.
 - First run startup was verified: W&B initialized, the stream loaded with
   19 segments, and model weights began loading successfully.
 - Attempt 1 was interrupted with `Terminated` before producing a completed run.
@@ -146,8 +144,7 @@ Strict blockers:
 
 ## Suite B: Standard T5-Large PEFT CL
 
-Status: `smoke_ready` for ours-only T5-large seq2seq PEFT code; official
-resources and streams are prepared.
+Status: `start-attempted / ready` for strict O-LoRA standard CL ours-only T5-large seq2seq PEFT. Official resources and streams are prepared, strict configs now include the runner-required `processed_stream_dir`, and train hyperparameters are aligned to the O-LoRA official reference where supported: lr `1e-3`, one epoch, train batch size `8`, source length `512`, target/generation length `50`.
 
 Prepared:
 
@@ -189,10 +186,17 @@ Remaining blockers:
   tuning and its README points to LM-adapted T5-large rather than O-LoRA's
   `initial_model/t5-large` directory layout.
 
+Started:
+
+- tmux session: `ccfa_standard_peft_strict_ours`.
+- Queue script: `/root/autodl-tmp/lora-baselines-run_v1/run_ccfa_standard_peft_strict_queue.sh`.
+- Queue log: `/root/autodl-tmp/lora-baselines-run_v1/logs/ccfa_standard_peft_strict_queue.log`.
+- W&B project: `lora- baselines-run_v1`; first run `standard_peft_cl_o_lora_standard_order1_seed1_ours_strict` initialized and began loading local T5-large weights successfully.
+- Runtime configs: `/root/autodl-tmp/lora-baselines-run_v1/configs/ccfa_three_suite/standard_peft_cl_o_lora_standard_order{1,2,3}_seed{1,2,3}_ours_strict.yaml`.
+
 ## Suite C: Dialogue NLG
 
-Status: `smoke_ready` for ours-only seq2seq generation and ARPER WOZ3 stream
-evaluation; official/backup resources and streams are prepared.
+Status: `metric_ready / start-attempted`. Path A runs ours T5 seq2seq on the official ARPER WOZ3 dialogue-act stream with official-equivalent BLEU/SER; Path B wrapper launches the official SCLSTM baseline when exact backbone reproduction is required.
 
 Prepared:
 
@@ -212,15 +216,12 @@ Prepared:
 
 Implemented:
 
-- A seq2seq launch template is available at
-  `docs/configs/ccfa_three_suite/dialogue_nlg_arper_multiwoz_nlg_dialogue_act_seed1_ours_seq2seq.yaml`.
-- Evaluation exports corpus BLEU-4 and an auditable slot-missing SER count/rate
-  over dialogue-act values in the unified stream input.
+- Path A strict configs are `dialogue_nlg_arper_woz3_dialogue_act_seed{1,2,3}_ours_strict.yaml`; CPU runtime is used to avoid single-GPU contention with CITB Stage-1.
+- Evaluation now exports official-equivalent ARPER WOZ3 grouped BLEU-4 plus SER `redunt/miss/total`; standalone adapter is `methods/ours/source/project_local/scripts/score_arper_woz3_outputs.py`.
 
 Remaining blockers:
 
-- The ours T5 path is an ours-only generation baseline, not ARPER's SCLSTM
-  architecture.
+- The ours T5 path is Path A, not ARPER's SCLSTM architecture; Path B wrapper is `docs/scripts/run_arper_official_sclstm_wrapper.sh`.
 - If switching to ToDCL as the runnable backup, its four upstream datasets
   (`SGD`, `Taskmaster`, `MultiWOZ`) still need full local download and
   preprocessing through the official `data/download.sh`/`utils/preprocess.py`

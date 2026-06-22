@@ -11,9 +11,13 @@ from core.data import Example, Segment
 from core.formatting import format_for_infer, format_for_train
 from core.train_labels import build_supervised_labels
 from core.metrics_utils import (
+    arper_woz3_corpus_bleu4_from_examples as _arper_woz3_corpus_bleu4_from_examples,
+    arper_woz3_slot_error_counts as _arper_woz3_slot_error_counts,
+    arper_woz3_slot_error_rate as _arper_woz3_slot_error_rate,
     corpus_bleu4 as _corpus_bleu4,
     dialogue_slot_error_counts as _dialogue_slot_error_counts,
     dialogue_slot_error_rate as _dialogue_slot_error_rate,
+    looks_like_arper_woz3_features as _looks_like_arper_woz3_features,
     lcs_length as _lcs_length,
     lcs_overlap as _lcs_overlap,
     rouge_l_fscore as _rouge_l_fscore,
@@ -210,6 +214,9 @@ def evaluate_stream(
     all_bleu: List[float] = []
     all_slot_error: List[float] = []
     all_task_aware_scores: List[float] = []
+    arper_total = 0
+    arper_redunt = 0
+    arper_miss = 0
     task_score_type_counts: Dict[str, int] = {}
     all_prefix1: List[int] = []
     all_prefix3: List[int] = []
@@ -237,6 +244,12 @@ def evaluate_stream(
             [float(x["slot_error_rate"]) for x in seg_examples if x.get("slot_error_rate") is not None]
         )
         all_task_aware_scores.extend([float(x.get("task_aware_score", 0.0)) for x in seg_examples])
+        for x in seg_examples:
+            arper_counts = x.get("arper_woz3_ser_counts")
+            if isinstance(arper_counts, dict):
+                arper_total += int(arper_counts.get("total", 0))
+                arper_redunt += int(arper_counts.get("redunt", 0))
+                arper_miss += int(arper_counts.get("miss", 0))
         for x in seg_examples:
             score_type = str(x.get("task_score_type", "unknown"))
             task_score_type_counts[score_type] = task_score_type_counts.get(score_type, 0) + 1
@@ -312,6 +325,14 @@ def evaluate_stream(
             [str(x.get("normalized_prediction", "")) for x in all_examples_for_dump],
             [str(x.get("normalized_gold", "")) for x in all_examples_for_dump],
         ),
+        "arper_woz3_corpus_bleu4": _arper_woz3_corpus_bleu4_from_examples(all_examples_for_dump),
+        "arper_woz3_ser": float((arper_redunt + arper_miss) / max(1, arper_total)) if arper_total > 0 else None,
+        "arper_woz3_ser_percent": float((arper_redunt + arper_miss) / max(1, arper_total) * 100.0)
+        if arper_total > 0
+        else None,
+        "arper_woz3_redunt": int(arper_redunt),
+        "arper_woz3_miss": int(arper_miss),
+        "arper_woz3_total": int(arper_total),
         "per_segment_accuracy": [{"segment_id": sid, "accuracy": acc} for sid, acc in per_seg_acc],
         "per_segment_task_aware_accuracy": [
             {"segment_id": sid, "task_aware_accuracy": acc} for sid, acc in per_seg_task_aware_acc
@@ -587,8 +608,18 @@ def _eval_segment(
         lcs_overlap = _lcs_overlap(norm_pred, norm_gold)
         rouge_l = _rouge_l_fscore(norm_pred, norm_gold)
         bleu = _sentence_bleu4(norm_pred, norm_gold)
-        slot_error = _dialogue_slot_error_rate(ex.input, norm_pred)
-        slot_counts = _dialogue_slot_error_counts(ex.input, norm_pred)
+        arper_ser_counts = None
+        if _looks_like_arper_woz3_features(ex.input):
+            slot_error = _arper_woz3_slot_error_rate(ex.input, norm_pred)
+            arper_ser_counts = _arper_woz3_slot_error_counts(ex.input, norm_pred)
+            slot_counts = {
+                "required_slots": int(arper_ser_counts.get("total", 0)),
+                "missing_slots": int(arper_ser_counts.get("miss", 0)),
+                "redundant_slots": int(arper_ser_counts.get("redunt", 0)),
+            }
+        else:
+            slot_error = _dialogue_slot_error_rate(ex.input, norm_pred)
+            slot_counts = _dialogue_slot_error_counts(ex.input, norm_pred)
         task_score = _score_task_aware(
             pred=pred,
             gold=y,
@@ -702,6 +733,8 @@ def _eval_segment(
                 "slot_error_rate": None if slot_error is None else float(slot_error),
                 "slot_required_count": int(slot_counts.get("required_slots", 0)),
                 "slot_missing_count": int(slot_counts.get("missing_slots", 0)),
+                "slot_redundant_count": int(slot_counts.get("redundant_slots", 0)),
+                "arper_woz3_ser_counts": arper_ser_counts,
                 "bad_prefix_mismatch": bool(bad_prefix),
                 "prefix_1_match": bool(prefix_1_match),
                 "prefix_3_match": bool(prefix_3_match),
