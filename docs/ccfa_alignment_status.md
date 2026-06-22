@@ -6,6 +6,21 @@ This file records the current machine-local preparation state for the v2
 CCF-A three-suite experiments. Large repositories, data, model snapshots, logs,
 and run outputs are kept outside Git under `/root/autodl-tmp`.
 
+## Strict Alignment Update
+
+Updated later on 2026-06-22 for the strict paper/official-repo pass.
+
+- Row-by-row evidence and status now live in
+  `docs/ccfa_strict_alignment_matrix.md`.
+- Strict configs are `*_ours_strict.yaml` under
+  `docs/configs/ccfa_three_suite/`, with runtime copies under
+  `/root/autodl-tmp/lora-baselines-run_v1/configs/ccfa_three_suite/`.
+- The manifest `docs/ccfa_three_suite_manifest.csv` now uses strict statuses:
+  CITB InstrDialog is `needs-stage1`, CITB InstrDialog++ is `blocked`,
+  Standard PEFT CL is `ready`, and Dialogue NLG / ARPER is `blocked`.
+- Older `caveat_ready` and `blocked` configs remain as historical artifacts and
+  must not be used as final strict launch configs.
+
 ## Proxy
 
 - Clash/mihomo config root: `/root/autodl-tmp/Lora-code/configs/clash`.

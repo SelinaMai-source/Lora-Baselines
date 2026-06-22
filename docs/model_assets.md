@@ -32,6 +32,10 @@ Observed on 2026-06-22:
 - `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt`
   contains a completed base snapshot including `pytorch_model.bin`, config,
   tokenizer files, and `spiece.model`.
+- No verified CITB 100-SuperNI-init checkpoint is present under
+  `/root/autodl-tmp/lora-baselines-run_v1/models/citb_stage1_superni_t5_small_lm_adapt`.
+  Web/repo checks did not find an author-provided checkpoint download; use the
+  official CITB Stage-1 script to produce it before strict CITB runs.
 - `/root/autodl-tmp/model_cache/ThomasNLG/CT0-11B` exists and contains small
   Hugging Face config/tokenizer files only. Size observed: about 1.4M.
 - `/root/autodl-tmp/model_cache/lfpt5/t5.1.1.lm100k` exists and contains
@@ -65,9 +69,8 @@ Current state:
   `/root/autodl-tmp/model_cache/hf_snapshots/google__t5-small-lm-adapt`.
 - CITB does not provide a ready-made 100-SuperNI-init checkpoint in the README;
   it provides the Stage-1 training command using `google/t5-small-lm-adapt`.
-- The current ours runner still lacks the T5-small seq2seq PEFT path. The
-  started caveat-ready CITB queue uses the local Llama causal-LM snapshot and
-  records that caveat in the runtime config.
+- The ours runner now has a T5 seq2seq PEFT path, but strict CITB rows remain
+  `needs-stage1` until the 100-SuperNI-init checkpoint is actually produced.
 
 ### Standard T5-Large PEFT CL
 

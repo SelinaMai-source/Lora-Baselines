@@ -8,6 +8,16 @@ enough to support a fair comparison.
 No run should be launched until the row is marked `ready` in
 `docs/ccfa_three_suite_manifest.csv`.
 
+Strict alignment pass (2026-06-22):
+
+- Use `docs/ccfa_strict_alignment_matrix.md` as the current checklist of
+  paper/repo evidence, local prepared paths, and launch blockers.
+- Use only `*_ours_strict.yaml` configs for strict runs. The old Llama
+  caveat-ready configs are not final strict configs.
+- Current launch state: Standard PEFT CL order 1/2/3 are `ready`; CITB
+  InstrDialog is `needs-stage1`; CITB InstrDialog++ and ARPER Dialogue NLG are
+  `blocked`.
+
 ## Ground Rules
 
 - Do not report numbers unless they are traceable to a paper, official page, or
